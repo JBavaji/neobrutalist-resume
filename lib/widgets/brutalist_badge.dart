@@ -2,15 +2,22 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../theme/neobrutalist_theme.dart';
 import 'custom_icons.dart';
+import 'inline_editable_text.dart';
 
 class BrutalistBadge extends StatelessWidget {
   final String nameFirst;
   final String nameLast;
+  final bool isEditing;
+  final ValueChanged<String>? onFirstNameChanged;
+  final ValueChanged<String>? onLastNameChanged;
 
   const BrutalistBadge({
     super.key,
     required this.nameFirst,
     required this.nameLast,
+    this.isEditing = false,
+    this.onFirstNameChanged,
+    this.onLastNameChanged,
   });
 
   @override
@@ -36,9 +43,11 @@ class BrutalistBadge extends StatelessWidget {
                 ),
               ],
             ),
-            child: Text(
-              nameFirst.toUpperCase(),
+            child: InlineEditableText(
+              text: nameFirst.toUpperCase(),
               style: AppTypography.headingLarge(),
+              isEditing: isEditing,
+              onChanged: (val) => onFirstNameChanged?.call(val),
             ),
           ),
         ),
@@ -58,9 +67,11 @@ class BrutalistBadge extends StatelessWidget {
               children: [
                 const BrutalistSmileyWidget(size: 42),
                 const SizedBox(width: 14),
-                Text(
-                  nameLast.toUpperCase(),
+                InlineEditableText(
+                  text: nameLast.toUpperCase(),
                   style: AppTypography.monoBadge(),
+                  isEditing: isEditing,
+                  onChanged: (val) => onLastNameChanged?.call(val),
                 ),
               ],
             ),

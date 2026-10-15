@@ -25,6 +25,9 @@ void main() {
     // Verify presence of core sections
     expect(find.text('EXPERIENCE'), findsOneWidget);
     expect(find.text('EDUCATION'), findsOneWidget);
-    expect(find.text('CERTIFICA-\nTIONS'), findsOneWidget);
+    expect(find.text('CERTIFICATIONS'), findsOneWidget);
+
+    // Verify presence of toolbar
+    expect(find.text('🖨️ Print / PDF'), findsOneWidget);
   });
 }

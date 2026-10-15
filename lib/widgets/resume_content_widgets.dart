@@ -3,14 +3,19 @@ import 'package:url_launcher/url_launcher.dart';
 import '../models/resume_model.dart';
 import '../theme/neobrutalist_theme.dart';
 import 'custom_icons.dart';
+import 'inline_editable_text.dart';
 
 /// Skill Pill Widget
 class SkillPillWidget extends StatelessWidget {
   final String skill;
+  final bool isEditing;
+  final ValueChanged<String>? onChanged;
 
   const SkillPillWidget({
     super.key,
     required this.skill,
+    this.isEditing = false,
+    this.onChanged,
   });
 
   @override
@@ -21,9 +26,11 @@ class SkillPillWidget extends StatelessWidget {
         color: Colors.transparent,
         border: Border.all(color: AppColors.ink, width: 1.8),
       ),
-      child: Text(
-        skill,
+      child: InlineEditableText(
+        text: skill,
         style: AppTypography.monoPill(),
+        isEditing: isEditing,
+        onChanged: (val) => onChanged?.call(val),
       ),
     );
   }
@@ -32,10 +39,20 @@ class SkillPillWidget extends StatelessWidget {
 /// Experience Item Widget
 class ExperienceItemWidget extends StatelessWidget {
   final ExperienceItem item;
+  final bool isEditing;
+  final ValueChanged<String>? onRoleChanged;
+  final ValueChanged<String>? onCompanyChanged;
+  final ValueChanged<String>? onPeriodChanged;
+  final void Function(int index, String value)? onBulletChanged;
 
   const ExperienceItemWidget({
     super.key,
     required this.item,
+    this.isEditing = false,
+    this.onRoleChanged,
+    this.onCompanyChanged,
+    this.onPeriodChanged,
+    this.onBulletChanged,
   });
 
   @override
@@ -48,26 +65,37 @@ class ExperienceItemWidget extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(
-                  '${item.role} | ${item.company}',
+                child: InlineEditableText(
+                  text: '${item.role} | ${item.company}',
                   style: AppTypography.monoBody(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                  ).copyWith(
-                    decoration: TextDecoration.underline,
-                    decorationThickness: 1.5,
                   ),
+                  decoration: TextDecoration.underline,
+                  decorationThickness: 1.5,
+                  isEditing: isEditing,
+                  onChanged: (val) {
+                    final parts = val.split('|');
+                    if (parts.length >= 2) {
+                      onRoleChanged?.call(parts[0].trim());
+                      onCompanyChanged?.call(parts.sublist(1).join('|').trim());
+                    } else {
+                      onRoleChanged?.call(val.trim());
+                    }
+                  },
                 ),
               ),
             ],
           ),
           const SizedBox(height: 3),
-          Text(
-            item.period,
+          InlineEditableText(
+            text: item.period,
             style: AppTypography.monoBody(
               fontSize: 13.5,
               fontWeight: FontWeight.w700,
             ),
+            isEditing: isEditing,
+            onChanged: (val) => onPeriodChanged?.call(val),
           ),
           const SizedBox(height: 6),
           for (int i = 0; i < item.bullets.length; i++)
@@ -79,12 +107,15 @@ class ExperienceItemWidget extends StatelessWidget {
                   const Text('• ',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   Expanded(
-                    child: Text(
-                      item.bullets[i],
+                    child: InlineEditableText(
+                      text: item.bullets[i],
                       style: AppTypography.monoBody(
                         fontSize: 13.5,
                         height: 1.45,
                       ),
+                      multiline: true,
+                      isEditing: isEditing,
+                      onChanged: (val) => onBulletChanged?.call(i, val),
                     ),
                   ),
                 ],
@@ -99,10 +130,16 @@ class ExperienceItemWidget extends StatelessWidget {
 /// Project Item Widget
 class ProjectItemWidget extends StatelessWidget {
   final ProjectItem item;
+  final bool isEditing;
+  final ValueChanged<String>? onNameChanged;
+  final ValueChanged<String>? onDescriptionChanged;
 
   const ProjectItemWidget({
     super.key,
     required this.item,
+    this.isEditing = false,
+    this.onNameChanged,
+    this.onDescriptionChanged,
   });
 
   @override
@@ -110,14 +147,19 @@ class ProjectItemWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          item.name,
+        InlineEditableText(
+          text: item.name,
           style: AppTypography.headingSub(),
+          isEditing: isEditing,
+          onChanged: (val) => onNameChanged?.call(val),
         ),
         const SizedBox(height: 2),
-        Text(
-          item.description,
+        InlineEditableText(
+          text: item.description,
           style: AppTypography.monoBody(fontSize: 13.5, height: 1.4),
+          multiline: true,
+          isEditing: isEditing,
+          onChanged: (val) => onDescriptionChanged?.call(val),
         ),
       ],
     );
@@ -127,10 +169,18 @@ class ProjectItemWidget extends StatelessWidget {
 /// Education Item Widget
 class EducationItemWidget extends StatelessWidget {
   final EducationItem item;
+  final bool isEditing;
+  final ValueChanged<String>? onDegreeChanged;
+  final ValueChanged<String>? onInstitutionChanged;
+  final ValueChanged<String>? onPeriodChanged;
 
   const EducationItemWidget({
     super.key,
     required this.item,
+    this.isEditing = false,
+    this.onDegreeChanged,
+    this.onInstitutionChanged,
+    this.onPeriodChanged,
   });
 
   @override
@@ -138,22 +188,26 @@ class EducationItemWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          item.degree,
+        InlineEditableText(
+          text: item.degree,
           style: AppTypography.headingSub(),
+          isEditing: isEditing,
+          onChanged: (val) => onDegreeChanged?.call(val),
         ),
         const SizedBox(height: 2),
-        Text(
-          item.institution,
+        InlineEditableText(
+          text: item.institution,
           style: AppTypography.monoBody(fontSize: 13.5, height: 1.4),
+          isEditing: isEditing,
+          onChanged: (val) => onInstitutionChanged?.call(val),
         ),
         const SizedBox(height: 2),
-        Text(
-          item.period,
+        InlineEditableText(
+          text: item.period,
           style: AppTypography.monoBody(
-            fontSize: 13.0,
-            fontWeight: FontWeight.w700,
-          ),
+              fontSize: 13.0, fontWeight: FontWeight.w700),
+          isEditing: isEditing,
+          onChanged: (val) => onPeriodChanged?.call(val),
         ),
       ],
     );
@@ -163,10 +217,18 @@ class EducationItemWidget extends StatelessWidget {
 /// Certification Item Widget
 class CertificationItemWidget extends StatelessWidget {
   final CertificationItem item;
+  final bool isEditing;
+  final ValueChanged<String>? onTitleChanged;
+  final ValueChanged<String>? onIssuerChanged;
+  final ValueChanged<String>? onYearChanged;
 
   const CertificationItemWidget({
     super.key,
     required this.item,
+    this.isEditing = false,
+    this.onTitleChanged,
+    this.onIssuerChanged,
+    this.onYearChanged,
   });
 
   @override
@@ -179,12 +241,49 @@ class CertificationItemWidget extends StatelessWidget {
           child: AsteriskIconWidget(size: 18),
         ),
         Expanded(
-          child: Text(
-            item.issuer.isNotEmpty
-                ? '${item.title} — ${item.issuer} (${item.year})'
-                : '${item.title} (${item.year})',
-            style: AppTypography.monoBody(fontSize: 13.0, height: 1.35),
-          ),
+          child: isEditing
+              ? Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: InlineEditableText(
+                        text: item.title,
+                        style: AppTypography.monoBody(
+                            fontSize: 13.0, fontWeight: FontWeight.bold),
+                        isEditing: true,
+                        onChanged: (val) => onTitleChanged?.call(val),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    const Text('—'),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      flex: 2,
+                      child: InlineEditableText(
+                        text: item.issuer,
+                        style: AppTypography.monoBody(fontSize: 13.0),
+                        isEditing: true,
+                        onChanged: (val) => onIssuerChanged?.call(val),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      flex: 1,
+                      child: InlineEditableText(
+                        text: item.year,
+                        style: AppTypography.monoBody(fontSize: 13.0),
+                        isEditing: true,
+                        onChanged: (val) => onYearChanged?.call(val),
+                      ),
+                    ),
+                  ],
+                )
+              : Text(
+                  item.issuer.isNotEmpty
+                      ? '${item.title} — ${item.issuer} (${item.year})'
+                      : '${item.title} (${item.year})',
+                  style: AppTypography.monoBody(fontSize: 13.0, height: 1.35),
+                ),
         ),
       ],
     );
@@ -195,11 +294,23 @@ class CertificationItemWidget extends StatelessWidget {
 class ResumeFooterWidget extends StatelessWidget {
   final ContactInfo contact;
   final bool isMobile;
+  final bool isEditing;
+  final ValueChanged<String>? onPhoneChanged;
+  final ValueChanged<String>? onLocationChanged;
+  final ValueChanged<String>? onEmailChanged;
+  final ValueChanged<String>? onLinkedinChanged;
+  final ValueChanged<String>? onWebsiteChanged;
 
   const ResumeFooterWidget({
     super.key,
     required this.contact,
     required this.isMobile,
+    this.isEditing = false,
+    this.onPhoneChanged,
+    this.onLocationChanged,
+    this.onEmailChanged,
+    this.onLinkedinChanged,
+    this.onWebsiteChanged,
   });
 
   Future<void> _launchUrl(String urlString) async {
@@ -223,14 +334,18 @@ class ResumeFooterWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                contact.phone,
+              InlineEditableText(
+                text: contact.phone,
                 style: AppTypography.monoBody(fontSize: 12.5),
+                isEditing: isEditing,
+                onChanged: (val) => onPhoneChanged?.call(val),
               ),
               const SizedBox(height: 6),
-              Text(
-                contact.location,
+              InlineEditableText(
+                text: contact.location,
                 style: AppTypography.monoBody(fontSize: 12.5),
+                isEditing: isEditing,
+                onChanged: (val) => onLocationChanged?.call(val),
               ),
               const SizedBox(height: 10),
               _buildLinks(),
@@ -242,16 +357,20 @@ class ResumeFooterWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: Text(
-                  contact.phone,
+                child: InlineEditableText(
+                  text: contact.phone,
                   style: AppTypography.monoBody(fontSize: 12.5),
+                  isEditing: isEditing,
+                  onChanged: (val) => onPhoneChanged?.call(val),
                 ),
               ),
               Expanded(
-                child: Text(
-                  contact.location,
+                child: InlineEditableText(
+                  text: contact.location,
                   textAlign: TextAlign.center,
                   style: AppTypography.monoBody(fontSize: 12.5),
+                  isEditing: isEditing,
+                  onChanged: (val) => onLocationChanged?.call(val),
                 ),
               ),
               Expanded(
@@ -264,6 +383,33 @@ class ResumeFooterWidget extends StatelessWidget {
   }
 
   Widget _buildLinks() {
+    if (isEditing) {
+      return Column(
+        crossAxisAlignment:
+            isMobile ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+        children: [
+          InlineEditableText(
+            text: contact.email,
+            style: AppTypography.monoBody(fontSize: 12.5),
+            isEditing: true,
+            onChanged: (val) => onEmailChanged?.call(val),
+          ),
+          InlineEditableText(
+            text: contact.linkedin,
+            style: AppTypography.monoBody(fontSize: 12.5),
+            isEditing: true,
+            onChanged: (val) => onLinkedinChanged?.call(val),
+          ),
+          InlineEditableText(
+            text: contact.website,
+            style: AppTypography.monoBody(fontSize: 12.5),
+            isEditing: true,
+            onChanged: (val) => onWebsiteChanged?.call(val),
+          ),
+        ],
+      );
+    }
+
     return Column(
       crossAxisAlignment:
           isMobile ? CrossAxisAlignment.start : CrossAxisAlignment.end,
