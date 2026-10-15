@@ -1,11 +1,11 @@
 {
-  "nameFirst": "JAYESHGIRI",
+  "nameFirst": "JAYESHGIRII",
   "nameLast": "BAVAJI",
-  "bio": "Hi, I'm Jayesh, an Engineering Manager & Technical Architect based in Pune, India with 14+ years building cross-platform mobile, web, and Agentic AI solutions across FinTech, InsurTech, and enterprise innovation.",
+  "bio": "Hi, I'm Jayeshgirii, an Engineering Manager & Technical Architect based in Pune, India with 14+ years building cross-platform mobile, web, and Agentic AI solutions across FinTech, InsurTech, and enterprise innovation.",
   "experience": [
     {
-      "role": "Associate Specialist Technology (Lead)",
-      "company": "Synechron",
+      "role": "Associate Specialist Technology (Mobile)",
+      "company": "Synechron Technology Pvt. Ltd.",
       "period": "2018 – Present (8+ Years)",
       "bullets": [
         "Lead architecture and deployment for Sandbox Platform (enterprise cloud-native accelerator on Azure/Kubernetes with React 19) and InfraSec.AI.",
@@ -15,7 +15,7 @@
     },
     {
       "role": "Software Engineer – Android",
-      "company": "iCoderz Solutions",
+      "company": "iCoderz Solutions Pvt. Ltd.",
       "period": "2013 – 2018 (5 Years)",
       "bullets": [
         "Architected and delivered 10+ Android applications end-to-end from concept to Google Play Store releases across consumer, B2B, and enterprise domains.",
@@ -24,7 +24,7 @@
     }
   ],
   "skills": [
-    "Mobile & Cross-Platform (Flutter / React Native)",
+    "Mobile & Cross-Platform (Flutter / React Native / Android)",
     "Frontend & Web (React 19 / Tailwind / Redux)",
     "Agentic AI & LLMs",
     "Cloud & DevOps (Azure / Kubernetes / CI/CD)",
