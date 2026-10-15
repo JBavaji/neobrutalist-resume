@@ -39,7 +39,7 @@ class ResumeScreen extends StatefulWidget {
 class _ResumeScreenState extends State<ResumeScreen> {
   ResumeData? _resumeData;
   bool _isUsingTemplate = false;
-  bool _isEditing = true;
+  bool _isEditing = false;
   bool _isLoading = true;
 
   @override
