@@ -62,30 +62,31 @@ class ExperienceItemWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: InlineEditableText(
-                  text: '${item.role} | ${item.company}',
-                  style: AppTypography.monoBody(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  decoration: TextDecoration.underline,
-                  decorationThickness: 1.5,
-                  isEditing: isEditing,
-                  onChanged: (val) {
-                    final parts = val.split('|');
-                    if (parts.length >= 2) {
-                      onRoleChanged?.call(parts[0].trim());
-                      onCompanyChanged?.call(parts.sublist(1).join('|').trim());
-                    } else {
-                      onRoleChanged?.call(val.trim());
-                    }
-                  },
-                ),
-              ),
-            ],
+          // Role (Line 1)
+          InlineEditableText(
+            text: item.role,
+            style: AppTypography.monoBody(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+            ).copyWith(
+              decoration: TextDecoration.underline,
+              decorationThickness: 1.5,
+            ),
+            multiline: true,
+            isEditing: isEditing,
+            onChanged: (val) => onRoleChanged?.call(val.trim()),
+          ),
+          const SizedBox(height: 3),
+          // Organization / Company (Line 2)
+          InlineEditableText(
+            text: item.company,
+            style: AppTypography.monoBody(
+              fontSize: 13.5,
+              fontWeight: FontWeight.w500,
+            ),
+            multiline: true,
+            isEditing: isEditing,
+            onChanged: (val) => onCompanyChanged?.call(val.trim()),
           ),
           const SizedBox(height: 3),
           InlineEditableText(

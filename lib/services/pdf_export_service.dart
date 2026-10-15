@@ -94,11 +94,19 @@ class PdfExportService {
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
                         pw.Text(
-                          '${exp.role} | ${exp.company}',
+                          exp.role,
                           style: pw.TextStyle(
-                            font: fontMono,
+                            font: fontMonoBold,
                             fontSize: 10.5,
                             decoration: pw.TextDecoration.underline,
+                          ),
+                        ),
+                        pw.SizedBox(height: 2),
+                        pw.Text(
+                          exp.company,
+                          style: pw.TextStyle(
+                            font: fontMono,
+                            fontSize: 10,
                           ),
                         ),
                         pw.SizedBox(height: 2),
