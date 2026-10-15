@@ -1,0 +1,85 @@
+{
+  "nameFirst": "JAYESHGIRI",
+  "nameLast": "BAVAJI",
+  "bio": "Hi, I'm Jayesh, an Engineering Manager & Technical Architect based in Pune, India with 14+ years building cross-platform mobile, web, and Agentic AI solutions across FinTech, InsurTech, and enterprise innovation.",
+  "experience": [
+    {
+      "role": "Associate Specialist Technology (Lead)",
+      "company": "Synechron",
+      "period": "2018 – Present (8+ Years)",
+      "bullets": [
+        "Lead architecture and deployment for Sandbox Platform (enterprise cloud-native accelerator on Azure/Kubernetes with React 19) and InfraSec.AI.",
+        "Architected FinTouch touchscreen collaboration platform (Flutter/Dart) and pioneered Synechron's first-of-kind Web3/Solana employee rewards app.",
+        "Lead cross-functional engineering teams, establish CI/CD release pipelines, enforce quality gates, and bridge product vision with shipped code."
+      ]
+    },
+    {
+      "role": "Software Engineer – Android",
+      "company": "iCoderz Solutions",
+      "period": "2013 – 2018 (5 Years)",
+      "bullets": [
+        "Architected and delivered 10+ Android applications end-to-end from concept to Google Play Store releases across consumer, B2B, and enterprise domains.",
+        "Engineered real-time location tracking, Firebase cloud messaging, and robust multi-language localization features."
+      ]
+    }
+  ],
+  "skills": [
+    "Mobile & Cross-Platform (Flutter / React Native)",
+    "Frontend & Web (React 19 / Tailwind / Redux)",
+    "Agentic AI & LLMs",
+    "Cloud & DevOps (Azure / Kubernetes / CI/CD)",
+    "Technical Architecture & RBAC",
+    "Agile Engineering Leadership"
+  ],
+  "projects": [
+    {
+      "name": "Sandbox Platform",
+      "description": "Enterprise Kubernetes unified control plane on Azure with React 19, RBAC, cost governance & observability."
+    },
+    {
+      "name": "FinTouch & InfraSec.AI",
+      "description": "Touchscreen collaboration platform (Flutter/Dart) & automated security monitoring reducing MTTR."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Master of Computer Applications (MCA)",
+      "institution": "Saurashtra University, Rajkot",
+      "period": "2009 – 2012"
+    },
+    {
+      "degree": "Bachelor of Computer Applications (BCA)",
+      "institution": "Saurashtra University, Jamnagar",
+      "period": "2006 – 2009"
+    }
+  ],
+  "certifications": [
+    {
+      "title": "GitHub Certified: Agentic AI Developer",
+      "issuer": "GitHub",
+      "year": "2026"
+    },
+    {
+      "title": "Claude Code in Action",
+      "issuer": "Anthropic",
+      "year": "2026"
+    },
+    {
+      "title": "Azure AI Engineer Associate",
+      "issuer": "Microsoft",
+      "year": "2025"
+    },
+    {
+      "title": "Flutter & Dart: SOLID & Design Patterns",
+      "issuer": "Udemy",
+      "year": "2024"
+    }
+  ],
+  "contact": {
+    "phone": "+91 9601833544",
+    "location": "Pune, Maharashtra, India",
+    "email": "jbavaji@gmail.com",
+    "linkedin": "https://linkedin.com/in/jbavaji",
+    "website": "https://jbavaji.github.io"
+  }
+}

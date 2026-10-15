@@ -1,0 +1,69 @@
+{
+  "nameFirst": "FIRSTNAME",
+  "nameLast": "LASTNAME",
+  "bio": "Hi, I'm [Your Name], a [Your Role] based in [City, Country] with [X] years building scalable software solutions across mobile, web, and cloud.",
+  "experience": [
+    {
+      "role": "Senior Software Engineer / Lead",
+      "company": "Company Name",
+      "period": "2022 – Present (2+ Years)",
+      "bullets": [
+        "Architected and deployed key features increasing system performance by 35%.",
+        "Led cross-functional sprint planning, code reviews, and CI/CD automated deployments."
+      ]
+    },
+    {
+      "role": "Software Engineer",
+      "company": "Previous Company",
+      "period": "2019 – 2022 (3 Years)",
+      "bullets": [
+        "Delivered production applications with high test coverage and zero critical defects.",
+        "Collaborated with product designers to implement responsive, accessible UI components."
+      ]
+    }
+  ],
+  "skills": [
+    "Flutter / Dart",
+    "Mobile App Development",
+    "State Management",
+    "REST & GraphQL APIs",
+    "CI/CD & DevOps",
+    "Agile Leadership"
+  ],
+  "projects": [
+    {
+      "name": "Project Showcase One",
+      "description": "High-performance cross-platform application with offline caching and real-time synchronization."
+    },
+    {
+      "name": "Project Showcase Two",
+      "description": "Open-source developer tool with 1,000+ stars on GitHub and automated test suites."
+    }
+  ],
+  "education": [
+    {
+      "degree": "B.S. in Computer Science",
+      "institution": "University Name",
+      "period": "2015 – 2019"
+    }
+  ],
+  "certifications": [
+    {
+      "title": "AWS Certified Developer",
+      "issuer": "Amazon Web Services",
+      "year": "2025"
+    },
+    {
+      "title": "Flutter Certified Application Developer",
+      "issuer": "Google Developers",
+      "year": "2024"
+    }
+  ],
+  "contact": {
+    "phone": "+1 555-0199",
+    "location": "City, State, Country",
+    "email": "you@domain.com",
+    "linkedin": "https://linkedin.com/in/yourprofile",
+    "website": "https://yourusername.github.io"
+  }
+}
