@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/resume_model.dart';
+import '../services/pdf_export_service.dart';
 import '../theme/neobrutalist_theme.dart';
 
 class FloatingToolbar extends StatelessWidget {
@@ -9,8 +10,6 @@ class FloatingToolbar extends StatelessWidget {
   final VoidCallback onToggleData;
   final VoidCallback onToggleEdit;
   final VoidCallback onResetData;
-  final VoidCallback? onPrint;
-  final VoidCallback? onDownloadPdf;
 
   const FloatingToolbar({
     super.key,
@@ -20,8 +19,6 @@ class FloatingToolbar extends StatelessWidget {
     required this.onToggleData,
     required this.onToggleEdit,
     required this.onResetData,
-    this.onPrint,
-    this.onDownloadPdf,
   });
 
   @override
@@ -66,31 +63,14 @@ class FloatingToolbar extends StatelessWidget {
           _buildPillButton(
             label: '🖨️ Print / PDF',
             isOutline: false,
-            onPressed: onPrint ??
-                () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Print / PDF export available in next slice.'),
-                      duration: Duration(seconds: 1),
-                    ),
-                  );
-                },
+            onPressed: () => PdfExportService.printResume(currentData),
           ),
 
           // Direct Vector PDF Download Button
           _buildPillButton(
             label: '📥 Vector PDF',
             isOutline: true,
-            onPressed: onDownloadPdf ??
-                () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content:
-                          Text('Vector PDF export available in next slice.'),
-                      duration: Duration(seconds: 1),
-                    ),
-                  );
-                },
+            onPressed: () => PdfExportService.shareOrDownloadPdf(currentData),
           ),
 
           // Reset to Default Button
@@ -112,29 +92,28 @@ class FloatingToolbar extends StatelessWidget {
     Color? textColor,
     Color? borderColor,
   }) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: BorderRadius.circular(999),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-          decoration: BoxDecoration(
-            color: backgroundColor ??
-                (isOutline ? Colors.transparent : AppColors.cardBg),
-            borderRadius: BorderRadius.circular(999),
-            border: Border.all(
-              color: borderColor ?? (isOutline ? AppColors.ink : Colors.transparent),
-              width: 1.5,
-            ),
-          ),
-          child: Text(
-            label,
-            style: AppTypography.monoBody(
-              fontSize: 12.5,
-              fontWeight: FontWeight.w700,
-              color: textColor ?? AppColors.ink,
-            ),
+    final effectiveBg = backgroundColor ??
+        (isOutline ? Colors.transparent : AppColors.ink);
+    final effectiveText = textColor ??
+        (isOutline ? AppColors.ink : Colors.white);
+    final effectiveBorder = borderColor ?? AppColors.ink;
+
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(999),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 7),
+        decoration: BoxDecoration(
+          color: effectiveBg,
+          borderRadius: BorderRadius.circular(999),
+          border: isOutline ? Border.all(color: effectiveBorder, width: 1.5) : null,
+        ),
+        child: Text(
+          label,
+          style: AppTypography.monoBody(
+            color: effectiveText,
+            fontSize: 12.5,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),

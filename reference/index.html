@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jayeshgiri R. Bavaji - Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #DBD7CE;
+      --card-bg: #DBD7CE;
+      --text-color: #111111;
+      --border-color: #111111;
+      --accent-white: #FAF9F6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #ece8df;
+      font-family: 'Space Mono', monospace;
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 36px 16px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Floating Toolbar */
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      position: sticky;
+      top: 14px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.12);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn {
+      background: #111111;
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #333;
+      transform: translateY(-1px);
+    }
+
+    .btn.btn-outline {
+      background: transparent;
+      color: #111111;
+      border: 1.5px solid #111111;
+    }
+
+    .btn.btn-outline:hover {
+      background: #111111;
+      color: #fff;
+    }
+
+    /* Resume Outer Container */
+    .resume-container {
+      width: 100%;
+      max-width: 840px;
+      background-color: var(--card-bg);
+      border-radius: 36px;
+      padding: 56px 64px 44px 64px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.07);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      position: relative;
+    }
+
+    /* Header Grid */
+    .header-grid {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      column-gap: 36px;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    /* Name Badges */
+    .name-badge-wrapper {
+      position: relative;
+      padding-top: 8px;
+    }
+
+    .badge-top {
+      background: var(--card-bg);
+      border: 2.2px solid var(--border-color);
+      transform: rotate(-3.5deg);
+      display: inline-block;
+      padding: 8px 20px;
+      position: relative;
+      z-index: 1;
+      box-shadow: -1px 2px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    .badge-top h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      color: var(--text-color);
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .badge-bottom {
+      background: var(--card-bg);
+      border: 2.2px solid var(--border-color);
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 7px 18px 7px 12px;
+      margin-top: -8px;
+      margin-left: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .smiley-icon {
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--border-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      flex-shrink: 0;
+    }
+
+    .badge-bottom h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 27px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    /* Header Bio */
+    .header-bio {
+      font-size: 14.5px;
+      line-height: 1.55;
+      padding-left: 4px;
+    }
+
+    .header-bio strong {
+      font-weight: 700;
+    }
+
+    .header-bio .highlight {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Section Row Layout */
+    .section-row {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      column-gap: 36px;
+      margin-bottom: 28px;
+      align-items: start;
+    }
+
+    .section-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 2.5px;
+      line-height: 1.25;
+    }
+
+    .section-content {
+      font-size: 13.5px;
+    }
+
+    /* Experience Items */
+    .experience-item {
+      margin-bottom: 22px;
+    }
+
+    .experience-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .role-title {
+      font-size: 14px;
+      font-weight: 400;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      margin-bottom: 3px;
+    }
+
+    .date-range {
+      font-weight: 700;
+      font-size: 13.5px;
+      margin-bottom: 6px;
+    }
+
+    .bullet-list {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    .bullet-list li {
+      margin-bottom: 5px;
+      line-height: 1.45;
+    }
+
+    .bullet-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Skills Pill Grid */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-pill {
+      border: 1.8px solid var(--border-color);
+      padding: 5px 12px;
+      font-size: 12.5px;
+      font-weight: 400;
+      background: transparent;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    /* Sub 2-Column Grid (Projects & Education) */
+    .two-col-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 32px;
+      row-gap: 16px;
+    }
+
+    .project-card, .education-card {
+      font-size: 13.5px;
+    }
+
+    .project-name, .edu-degree {
+      font-weight: 800;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14.5px;
+      margin-bottom: 2px;
+    }
+
+    .project-desc, .edu-school {
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+
+    .edu-years {
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    /* Certifications */
+    .certs-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .certs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 24px;
+      row-gap: 8px;
+    }
+
+    .cert-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .cert-icon {
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Footer */
+    .footer-divider {
+      height: 1px;
+      background: rgba(0, 0, 0, 0.15);
+      margin-top: 16px;
+      margin-bottom: 18px;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 12.5px;
+      padding-top: 4px;
+    }
+
+    .footer-left {
+      text-align: left;
+    }
+
+    .footer-center {
+      text-align: center;
+    }
+
+    .footer-right {
+      text-align: right;
+    }
+
+    .footer-right a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      display: block;
+      line-height: 1.4;
+    }
+
+    /* Editable Styling Helper */
+    [contenteditable="true"] {
+      outline: none;
+      transition: background 0.15s ease;
+    }
+
+    [contenteditable="true"]:hover {
+      background: rgba(255, 255, 255, 0.45);
+      cursor: text;
+    }
+
+    [contenteditable="true"]:focus {
+      background: rgba(255, 255, 255, 0.75);
+      box-shadow: 0 0 0 2px #3B82F6;
+      border-radius: 4px;
+    }
+
+    /* Print & PDF Export Styles */
+    @media print {
+      body {
+        background-color: #fff;
+        padding: 0;
+      }
+
+      .toolbar {
+        display: none !important;
+      }
+
+      .resume-container {
+        max-width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+        padding: 24px 36px;
+        background-color: var(--card-bg) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .footer-divider {
+        display: block;
+      }
+
+      [contenteditable="true"]:hover,
+      [contenteditable="true"]:focus {
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .resume-container {
+        padding: 32px 20px;
+        border-radius: 20px;
+      }
+      .header-grid, .section-row, .two-col-content, .certs-grid {
+        grid-template-columns: 1fr;
+        row-gap: 16px;
+      }
+      .footer-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .footer-right {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Controls Bar -->
+  <div class="toolbar">
+    <button class="btn btn-outline" id="toggleEditBtn" onclick="toggleEditMode()">
+      ✏️ Edit Mode: <span id="editStatus">ON</span>
+    </button>
+    <button class="btn" onclick="window.print()">
+      🖨️ Print / Save as PDF
+    </button>
+  </div>
+
+  <!-- Resume Card Container -->
+  <main class="resume-container" id="resumeCard">
+
+    <!-- Header -->
+    <header class="header-grid">
+      <div class="name-badge-wrapper">
+        <div class="badge-top">
+          <h1 contenteditable="true">JAYESHGIRI</h1>
+        </div>
+        <div class="badge-bottom">
+          <div class="smiley-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 9c.5-1 1.5-1 2 0"></path>
+              <path d="M15 9c.5-1 1.5-1 2 0"></path>
+              <path d="M8 15c2 2.5 6 2.5 8 0"></path>
+            </svg>
+          </div>
+          <h2 contenteditable="true">BAVAJI</h2>
+        </div>
+      </div>
+
+      <div class="header-bio" contenteditable="true">
+        Hi, I'm <strong>Jayesh</strong>, an <span class="highlight">Engineering Manager</span> & Technical Architect based in <strong>Pune, India</strong> with 14+ years building cross-platform mobile, web, and Agentic AI solutions across FinTech, InsurTech, and enterprise innovation.
+      </div>
+    </header>
+
+    <!-- Experience Section -->
+    <section class="section-row">
+      <h3 class="section-title" contenteditable="true">EXPERIENCE</h3>
+      <div class="section-content">
+        <!-- Role 1 -->
+        <article class="experience-item">
+          <div class="role-title" contenteditable="true">Associate Specialist Technology (Lead) | Synechron</div>
+          <div class="date-range" contenteditable="true">2018 – Present (8+ Years)</div>
+          <ul class="bullet-list">
+            <li contenteditable="true">Lead architecture and deployment for <strong>Sandbox Platform</strong> (enterprise cloud-native accelerator on Azure/Kubernetes with React 19) and <strong>InfraSec.AI</strong>.</li>
+            <li contenteditable="true">Architected <strong>FinTouch</strong> touchscreen collaboration platform (Flutter/Dart) and pioneered Synechron's first-of-kind <strong>Web3/Solana</strong> employee rewards app.</li>
+            <li contenteditable="true">Lead cross-functional engineering teams, establish CI/CD release pipelines, enforce quality gates, and bridge product vision with shipped code.</li>
+          </ul>
+        </article>
+
+        <!-- Role 2 -->
+        <article class="experience-item">
+          <div class="role-title" contenteditable="true">Software Engineer – Android | iCoderz Solutions</div>
+          <div class="date-range" contenteditable="true">2013 – 2018 (5 Years)</div>
+          <ul class="bullet-list">
+            <li contenteditable="true">Architected and delivered <strong>10+ Android applications</strong> end-to-end from concept to Google Play Store releases across consumer, B2B, and enterprise domains.</li>
+            <li contenteditable="true">Engineered real-time location tracking, Firebase cloud messaging, and robust multi-language localization features.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Core Skills Section -->
+    <section class="section-row">
+      <h3 class="section-title" contenteditable="true">CORE<br>SKILLS</h3>
+      <div class="section-content">
+        <div class="skills-grid" id="skillsContainer">
+          <span class="skill-pill" contenteditable="true">Mobile & Cross-Platform (Flutter / React Native)</span>
+          <span class="skill-pill" contenteditable="true">Frontend & Web (React 19 / Tailwind / Redux)</span>
+          <span class="skill-pill" contenteditable="true">Agentic AI & LLMs</span>
+          <span class="skill-pill" contenteditable="true">Cloud & DevOps (Azure / Kubernetes / CI/CD)</span>
+          <span class="skill-pill" contenteditable="true">Technical Architecture & RBAC</span>
+          <span class="skill-pill" contenteditable="true">Agile Engineering Leadership</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Projects Section -->
+    <section class="section-row">
+      <h3 class="section-title" contenteditable="true">RECENT<br>PROJECTS</h3>
+      <div class="section-content">
+        <div class="two-col-content">
+          <div class="project-card">
+            <div class="project-name" contenteditable="true">Sandbox Platform</div>
+            <div class="project-desc" contenteditable="true">Enterprise Kubernetes unified control plane on Azure with React 19, RBAC, cost governance & observability.</div>
+          </div>
+          <div class="project-card">
+            <div class="project-name" contenteditable="true">FinTouch & InfraSec.AI</div>
+            <div class="project-desc" contenteditable="true">Touchscreen collaboration platform (Flutter/Dart) & automated security monitoring reducing MTTR.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="section-row">
+      <h3 class="section-title" contenteditable="true">EDUCATION</h3>
+      <div class="section-content">
+        <div class="two-col-content">
+          <div class="education-card">
+            <div class="edu-degree" contenteditable="true">Master of Computer Applications (MCA)</div>
+            <div class="edu-school" contenteditable="true">Saurashtra University, Rajkot</div>
+            <div class="edu-years" contenteditable="true">2009 – 2012</div>
+          </div>
+          <div class="education-card">
+            <div class="edu-degree" contenteditable="true">Bachelor of Computer Applications (BCA)</div>
+            <div class="edu-school" contenteditable="true">Saurashtra University, Jamnagar</div>
+            <div class="edu-years" contenteditable="true">2006 – 2009</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="section-row">
+      <h3 class="section-title" contenteditable="true">CERTIFICATIONS</h3>
+      <div class="section-content">
+        <div class="certs-grid">
+          <div class="cert-item">
+            <span class="cert-icon">
+              <!-- 8-Point Asterisk Icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" stroke="#111111" stroke-width="2.5" stroke-linecap="round">
+                <line x1="12" y1="2" x2="12" y2="22"></line>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                <line x1="19.07" y1="4.93" x2="4.93" y2="19.07"></line>
+              </svg>
+            </span>
+            <span contenteditable="true"><strong>GitHub Certified:</strong> Agentic AI Developer (2026)</span>
+          </div>
+
+          <div class="cert-item">
+            <span class="cert-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" stroke="#111111" stroke-width="2.5" stroke-linecap="round">
+                <line x1="12" y1="2" x2="12" y2="22"></line>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                <line x1="19.07" y1="4.93" x2="4.93" y2="19.07"></line>
+              </svg>
+            </span>
+            <span contenteditable="true"><strong>Claude Code in Action</strong> — Anthropic (2026)</span>
+          </div>
+
+          <div class="cert-item">
+            <span class="cert-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" stroke="#111111" stroke-width="2.5" stroke-linecap="round">
+                <line x1="12" y1="2" x2="12" y2="22"></line>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                <line x1="19.07" y1="4.93" x2="4.93" y2="19.07"></line>
+              </svg>
+            </span>
+            <span contenteditable="true"><strong>Azure AI Engineer Associate</strong> — Microsoft (2025)</span>
+          </div>
+
+          <div class="cert-item">
+            <span class="cert-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" stroke="#111111" stroke-width="2.5" stroke-linecap="round">
+                <line x1="12" y1="2" x2="12" y2="22"></line>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                <line x1="19.07" y1="4.93" x2="4.93" y2="19.07"></line>
+              </svg>
+            </span>
+            <span contenteditable="true"><strong>Flutter & Dart:</strong> SOLID & Design Patterns (Udemy)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer / Contact Info -->
+    <div class="footer-divider"></div>
+    <footer class="footer-row">
+      <div class="footer-left" contenteditable="true">
+        +91 9601833544
+      </div>
+      <div class="footer-center" contenteditable="true">
+        Pune, Maharashtra, <strong>India</strong>
+      </div>
+      <div class="footer-right">
+        <a href="mailto:jbavaji@gmail.com" contenteditable="true">jbavaji@gmail.com</a>
+        <a href="https://linkedin.com/in/jbavaji" target="_blank" contenteditable="true">linkedin.com/in/jbavaji</a>
+        <a href="https://jbavaji.github.io" target="_blank" contenteditable="true">jbavaji.github.io</a>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    let isEditing = true;
+
+    function toggleEditMode() {
+      isEditing = !isEditing;
+      const editableElements = document.querySelectorAll('[contenteditable]');
+      editableElements.forEach(el => {
+        el.setAttribute('contenteditable', isEditing ? 'true' : 'false');
+      });
+      document.getElementById('editStatus').textContent = isEditing ? 'ON' : 'OFF';
+      document.getElementById('toggleEditBtn').style.opacity = isEditing ? '1' : '0.7';
+    }
+
+    // Auto-save changes to localStorage
+    const resumeCard = document.getElementById('resumeCard');
+    const STORAGE_KEY = 'jayesh_editorial_resume_saved';
+
+    // Load saved content if exists
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        resumeCard.innerHTML = saved;
+      }
+    });
+
+    // Save on changes
+    resumeCard.addEventListener('input', () => {
+      localStorage.setItem(STORAGE_KEY, resumeCard.innerHTML);
+    });
+  </script>
+
+</body>
+</html>
