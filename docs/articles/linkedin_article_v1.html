@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Death of the 2-Page PDF: Engineering an Open-Source Neobrutalist Developer Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --canvas: #ECE8DF;
+      --card-bg: #DBD7CE;
+      --card-white: #FFFFFF;
+      --card-tint: #F4F1EA;
+      --ink: #111111;
+      --ink-muted: #555555;
+      --accent-blue: #3B82F6;
+      --accent-blue-light: #DBEAFE;
+      --accent-green: #10B981;
+      --accent-green-light: #D1FAE5;
+      --accent-amber: #F59E0B;
+      --accent-amber-light: #FEF3C7;
+      --accent-red: #EF4444;
+      --accent-red-light: #FEE2E2;
+      --accent-purple: #8B5CF6;
+      --border: 2.5px solid var(--ink);
+      --border-thin: 1.5px solid var(--ink);
+      --shadow-sm: 3px 3px 0px var(--ink);
+      --shadow-md: 5px 5px 0px var(--ink);
+      --shadow-lg: 8px 8px 0px var(--ink);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--canvas);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      padding-bottom: 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Floating Toolbar for Screenshots */
+    .screenshot-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: var(--ink);
+      color: #FFFFFF;
+      padding: 10px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 3px solid var(--accent-blue);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .toolbar-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toolbar-pill {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+    }
+
+    .toolbar-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .toolbar-btn {
+      background: #222222;
+      color: #FFFFFF;
+      border: 1px solid #444444;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .toolbar-btn:hover {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .toolbar-btn.toggle-btn {
+      background: #333333;
+      border-color: #666666;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    /* Screenshot Card Frame */
+    .screenshot-card {
+      background: var(--card-white);
+      border: var(--border);
+      box-shadow: var(--shadow-lg);
+      border-radius: var(--radius-md);
+      margin-bottom: 48px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .screenshot-card:hover {
+      box-shadow: 9px 9px 0px var(--ink);
+    }
+
+    .screenshot-header-strip {
+      background: var(--card-bg);
+      border-bottom: var(--border);
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .screenshot-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--ink);
+      color: #FFFFFF;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+
+    .screenshot-res {
+      color: var(--ink-muted);
+      font-size: 0.72rem;
+    }
+
+    .card-body {
+      padding: 28px 28px;
+    }
+
+    @media (max-width: 640px) {
+      .card-body {
+        padding: 20px 16px;
+      }
+    }
+
+    /* Badges & Stickers */
+    .sticker-badge {
+      display: inline-block;
+      background: var(--ink);
+      color: #FFFFFF;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      padding: 5px 12px;
+      border: var(--border);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm);
+      transform: rotate(-2deg);
+      text-transform: uppercase;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border: var(--border-thin);
+      border-radius: var(--radius-sm);
+      background: var(--card-bg);
+    }
+
+    .chip-blue { background: var(--accent-blue-light); border-color: var(--accent-blue); color: #1E3A8A; }
+    .chip-green { background: var(--accent-green-light); border-color: var(--accent-green); color: #065F46; }
+    .chip-amber { background: var(--accent-amber-light); border-color: var(--accent-amber); color: #92400E; }
+    .chip-red { background: var(--accent-red-light); border-color: var(--accent-red); color: #991B1B; }
+
+    /* Typography */
+    h1.hero-title {
+      font-size: 2.1rem;
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin: 16px 0 12px 0;
+    }
+
+    h2.card-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3.card-subtitle {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 18px 0 8px 0;
+      letter-spacing: -0.01em;
+    }
+
+    p {
+      margin-bottom: 14px;
+      font-size: 0.98rem;
+      color: #222222;
+    }
+
+    p.lead {
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.5;
+      color: #111111;
+    }
+
+    /* Banner Image Box */
+    .banner-container {
+      width: 100%;
+      border: var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      margin-bottom: 20px;
+      background: var(--ink);
+    }
+
+    .banner-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Author Profile Block */
+    .author-block {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      background: var(--card-bg);
+      border: var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      margin: 20px 0;
+    }
+
+    .author-avatar {
+      width: 56px;
+      height: 56px;
+      border: var(--border);
+      border-radius: 50%;
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      font-weight: 900;
+      font-family: 'Space Mono', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .author-info h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .author-info p {
+      font-size: 0.84rem;
+      color: var(--ink-muted);
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    /* Comparison Split Grid */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 700px) {
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .compare-box {
+      border: var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .compare-box.bad {
+      background: var(--accent-red-light);
+      border-color: #B91C1C;
+    }
+
+    .compare-box.good {
+      background: var(--accent-green-light);
+      border-color: #047857;
+    }
+
+    .compare-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px dashed rgba(0,0,0,0.2);
+    }
+
+    .compare-list {
+      list-style: none;
+    }
+
+    .compare-list li {
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.4;
+    }
+
+    /* Pipeline Flow Chart */
+    .pipeline-container {
+      margin: 24px 0;
+    }
+
+    .stage-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .stage-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stage-box {
+      border: var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      background: var(--card-tint);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stage-num {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: var(--ink);
+      color: #FFFFFF;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-bottom: 8px;
+      width: fit-content;
+    }
+
+    .stage-name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .stage-desc {
+      font-size: 0.82rem;
+      color: #333333;
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+
+    .stage-tag {
+      margin-top: 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding-top: 6px;
+    }
+
+    /* Comparison Table */
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0;
+      border: var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    table.brutalist-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card-white);
+      font-size: 0.86rem;
+      text-align: left;
+    }
+
+    table.brutalist-table th {
+      background: var(--card-bg);
+      border-bottom: var(--border);
+      border-right: 1px solid var(--ink);
+      padding: 12px 14px;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    table.brutalist-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #CCCCCC;
+      border-right: 1px solid #CCCCCC;
+      line-height: 1.4;
+    }
+
+    table.brutalist-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    table.brutalist-table tr td:last-child,
+    table.brutalist-table tr th:last-child {
+      border-right: none;
+    }
+
+    table.brutalist-table tr.highlight-row {
+      background: #F0FDF4;
+    }
+
+    /* Architecture Diagram Box */
+    .diagram-box {
+      background: #1E293B;
+      color: #F8FAFC;
+      border: var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin: 20px 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      overflow-x: auto;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Code Snippet Box */
+    .code-box {
+      background: #0F172A;
+      color: #E2E8F0;
+      border: var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      margin: 18px 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      overflow-x: auto;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      color: #94A3B8;
+      font-size: 0.72rem;
+    }
+
+    /* Step Grid */
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 640px) {
+      .step-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .step-card {
+      border: var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      background: var(--card-tint);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .step-num-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      border: var(--border-thin);
+      border-radius: 4px;
+      box-shadow: 2px 2px 0px var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .step-title {
+      font-size: 0.98rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .step-desc {
+      font-size: 0.84rem;
+      color: #333333;
+      line-height: 1.4;
+    }
+
+    /* CTA Card Box */
+    .cta-card {
+      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+      border: var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      margin: 24px 0 12px 0;
+    }
+
+    .roles-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0 18px 0;
+    }
+
+    .role-badge {
+      background: var(--ink);
+      color: #FFFFFF;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: var(--border-thin);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .btn-brutalist {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 0.84rem;
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--card-bg);
+      border: var(--border);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .btn-brutalist:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+    }
+
+    /* Hide screenshot badges toggle class */
+    body.hide-markers .screenshot-header-strip {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation & Screenshot Helper -->
+  <header class="screenshot-toolbar">
+    <div class="toolbar-title">
+      <span>📐 LINKEDIN ARTICLE VISUAL SUITE</span>
+      <span class="toolbar-pill">RETINA-READY</span>
+    </div>
+    <div class="toolbar-nav">
+      <a href="#card-hero" class="toolbar-btn">Hero</a>
+      <a href="#card-problem" class="toolbar-btn">1. Catalyst</a>
+      <a href="#card-sdlc" class="toolbar-btn">2. AI-SDLC</a>
+      <a href="#card-structure" class="toolbar-btn">3. File Tree</a>
+      <a href="#card-hosting" class="toolbar-btn">4. Hosting</a>
+      <a href="#card-routing" class="toolbar-btn">5. Routing</a>
+      <a href="#card-json" class="toolbar-btn">6. JSON Schema</a>
+      <a href="#card-perf" class="toolbar-btn">7. Cold-Start Fix</a>
+      <a href="#card-deploy" class="toolbar-btn">8. Deploy Steps</a>
+      <a href="#card-cta" class="toolbar-btn">9. Leadership CTA</a>
+      <button class="toolbar-btn toggle-btn" onclick="toggleMarkers()">Toggle Labels</button>
+      <button class="toolbar-btn toggle-btn" onclick="window.print()">Print / PDF</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- ========================================== -->
+    <!-- CARD 0: HERO & ARTICLE HEADER              -->
+    <!-- ========================================== -->
+    <article class="screenshot-card" id="card-hero">
+      <div class="screenshot-header-strip">
+        <span class="screenshot-tag">📸 FIGURE 0 &bull; ARTICLE HERO & BANNER</span>
+        <span class="screenshot-res">Aspect: 16:9 Banner + Title Block</span>
+      </div>
+      <div class="card-body">
+        
+        <!-- Official Banner Image -->
+        <div class="banner-container">
+          <img src="../../assets/images/banner.png" alt="The Death of the 2-Page PDF Banner" />
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <span class="sticker-badge">⚡ FLUTTER WEB & AI-SDLC</span>
+          <span class="chip chip-blue" style="margin-left: 8px;">100% OPEN SOURCE</span>
+          <span class="chip chip-green">ZERO-COST HOSTING</span>
+        </div>
+
+        <h1 class="hero-title">
+          The Death of the 2-Page PDF: Engineering an Open-Source Neobrutalist Developer Resume with Flutter Web & AI-Native SDLC
+        </h1>
+
+        <!-- Author Block -->
+        <div class="author-block">
+          <div class="author-avatar">JB</div>
+          <div class="author-info">
+            <h4>Jayeshgiri R. Bavaji</h4>
+            <p><strong>Engineering Manager & Principal Technical Architect</strong> &bull; Pune, Maharashtra, India</p>
+            <p style="margin-top: 2px;">14+ Years Experience &bull; Mobile & Cross-Platform (Flutter, Android, React Native) &bull; Agentic AI & DevOps</p>
+          </div>
+        </div>
+
+        <p class="lead">
+          Why are senior engineers and technical leaders still presenting their careers through static, 2-page black-and-white PDF resumes from 2005? A resume is not just a document; for an engineer, <strong>your resume is software</strong>.
+        </p>
+
+      </div>
+    </article>
+
+    <!-- ========================================== -->
+    <!-- CARD 1: THE CATALYST (PDF vs LIVING RESUME)-->
+    <!-- ========================================== -->
+    <article class="screenshot-card" id="card-problem">
+      <div class="screenshot-header-strip">
+        <span class="screenshot-tag">📸 FIGURE 1 &bull; THE PARADIGM SHIFT</span>
+        <span class="screenshot-res">Comparison Matrix: 2005 PDF vs 2026 Web Resume</span>
+      </div>
+      <div class="card-body">
+        
+        <h2 class="card-title">
+          <span>⚡</span> Section 1: The Catalyst — Why Developers Need a Living Resume
+        </h2>
+        
+        <p>
+          During senior engineering hiring, almost everyone sends the exact same generic PDF export. It gets mangled by Applicant Tracking Systems (ATS), contains zero SEO discoverability, and provides zero verifiable proof of architectural taste or code craftsmanship.
+        </p>
+
+        <!-- Side-by-side comparison boxes -->
+        <div class="compare-grid">
+          
+          <div class="compare-box bad">
+            <div class="compare-header" style="color: #991B1B;">
+              <span>❌</span> TRADITIONAL 2-PAGE PDF (2005)
+            </div>
+            <ul class="compare-list">
+              <li><span>⛔</span> <strong>Mangled by ATS:</strong> Multi-column tables and creative fonts get stripped into incoherent text salads.</li>
+              <li><span>⛔</span> <strong>Zero SEO & Discoverability:</strong> PDFs sit hidden in recruiter desktop downloads folders, invisible to web search.</li>
+              <li><span>⛔</span> <strong>Static & Dead:</strong> Zero interactivity, no live preview, no responsive mobile layout, no analytics.</li>
+              <li><span>⛔</span> <strong>No Proof of Craftsmanship:</strong> Recruiter cannot audit your commit history, clean architecture, or testing discipline.</li>
+            </ul>
+          </div>
+
+          <div class="compare-box good">
+            <div class="compare-header" style="color: #065F46;">
+              <span>✅</span> NEOBRUTALIST LIVING RESUME (2026)
+            </div>
+            <ul class="compare-list">
+              <li><span>⚡</span> <strong>Living Proof-of-Work:</strong> Built in Flutter & Dart; showcases real UI architecture, responsiveness, and state management.</li>
+              <li><span>⚡</span> <strong>SEO-Indexed & Shareable:</strong> Hosted on a custom GitHub Pages URL with high Google discoverability.</li>
+              <li><span>⚡</span> <strong>Dual-Export Parity:</strong> Fully interactive on mobile/desktop + instant 300+ DPI vector PDF export for traditional recruiters.</li>
+              <li><span>⚡</span> <strong>Zero-Bloat JSON Schema:</strong> Anyone can fork the repo and personalize their profile in 60 seconds.</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </article>
+
+    <!-- ========================================== -->
+    <!-- CARD 2: AI-SDLC EXECUTION AUDIT            -->
+    <!-- ========================================== -->
+    <article class="screenshot-card" id="card-sdlc">
+      <div class="screenshot-header-strip">
+        <span class="screenshot-tag">📸 FIGURE 2 &bull; 🏛️ AI-SDLC EXECUTION AUDIT</span>
+        <span class="screenshot-res">Workflow Diagram: Stages 1 through 6</span>
+      </div>
+      <div class="card-body">
+        
+        <h2 class="card-title">
+          <span>🏛️</span> Section 2: AI-SDLC Execution Audit (Stages 1 – 6)
+        </h2>
+        
+        <p>
+          Unregulated AI development produces <em>"AI Code Vomit"</em>: 1,000-line monolithic files, hallucinations, and brittle tests. To ensure production-grade software craftsmanship, this resume was governed through 6 formal stages of the <strong>AI-Native SDLC (v2.0)</strong>:
+        </p>
+
+        <!-- Pipeline Grid Row 1 -->
+        <div class="stage-row">
+          
+          <div class="stage-box">
+            <span class="stage-num">STAGE 01</span>
+            <div class="stage-name">Intent & "Grill-Me"</div>
+            <div class="stage-desc">
+              Mandatory 4-pillar interview with the AI agent. Enforced <strong>Rule 0: Simplicity First</strong>. Rejected heavy BLoC/Riverpod boilerplate in favor of pure <code>StatefulWidget</code> + <code>ValueNotifier</code>.
+            </div>
+            <div class="stage-tag">OUTPUT: docs/intent.md</div>
+          </div>
+
+          <div class="stage-box">
+            <span class="stage-num">STAGE 02</span>
+            <div class="stage-name">Spec & STRIDE Threat Model</div>
+            <div class="stage-desc">
+              Threat modeling for client-side web apps. Guarded against local storage corruption with defensive deserialization and sanitized external URL dispatches.
+            </div>
+            <div class="stage-tag">OUTPUT: docs/spec.md</div>
+          </div>
+
+          <div class="stage-box">
+            <span class="stage-num">STAGE 03</span>
+            <div class="stage-name">Vertical Slicing</div>
+            <div class="stage-desc">
+              Broke implementation into thin, testable vertical slices: Core Models, Neobrutalist Theme & Custom Painters, Responsive Layout & WYSIWYG, and Dual PDF Export.
+            </div>
+            <div class="stage-tag">OUTPUT: docs/plan.md</div>
+          </div>
+
+        </div>
+
+        <!-- Pipeline Grid Row 2 -->
+        <div class="stage-row">
+          
+          <div class="stage-box">
+            <span class="stage-num">STAGE 04</span>
+            <div class="stage-name">TDD & "Prove-It" Pattern</div>
+            <div class="stage-desc">
+              Zero code changes without failing reproduction tests first. Fixed layout bugs (e.g. TextField inside Wrap) by proving resolution via automated widget test assertions.
+            </div>
+            <div class="stage-tag">OUTPUT: 100% Test Pass Rate</div>
+          </div>
+
+          <div class="stage-box">
+            <span class="stage-num">STAGE 05</span>
+            <div class="stage-name">5-Axis Code Review</div>
+            <div class="stage-desc">
+              Audited across 5 critical axes: Correctness, Readability, Clean Architecture, Security (URL schemes), and Performance (0 hardcoded visual tokens).
+            </div>
+            <div class="stage-tag">OUTPUT: docs/REVIEW.md</div>
+          </div>
+
+          <div class="stage-box">
+            <span class="stage-num">STAGE 06</span>
+            <div class="stage-name">Deploy & Operationalize</div>
+            <div class="stage-desc">
+              Clean 7-commit Agile showcase, automated GitHub Actions CI/CD pipeline, and instant pure-CSS pre-loader for sub-second first paint.
+            </div>
+            <div class="stage-tag">OUTPUT: Live GitHub Pages App</div>
+          </div>
+
+        </div>
+
+      </div>
+    </article>
+
+    <!-- ========================================== -->
+    <!-- CARD 3: REPOSITORY ARCHITECTURE            -->
+    <!-- ========================================== -->
+    <article class="screenshot-card" id="card-structure">
+      <div class="screenshot-header-strip">
+        <span class="screenshot-tag">📸 FIGURE 3 &bull; 📂 CLEAN ARCHITECTURE FILE STRUCTURE</span>
+        <span class="screenshot-res">Decoupled Domain, Presentation, & Data Layers</span>
+      </div>
+      <div class="card-body">
+        
+        <h2 class="card-title">
+          <span>📂</span> Section 3: Clean Architecture Repository Structure
+        </h2>
+        
+        <p>
+          Clean architecture ensures that presentation widgets, data models, persistence services, and export drivers remain completely decoupled.
+        </p>
+
+        <div class="diagram-box">
+<span style="color: #60A5FA; font-weight: bold;">neobrutalist-resume/</span>
+├── <span style="color: #FCD34D;">.agent/</span>                      <span style="color: #94A3B8;"># AI-SDLC meta-governance & token audit harness</span>
+│   ├── rules/inversion-protocol.md
+│   └── security/token-audit.sh
+├── <span style="color: #FCD34D;">.github/workflows/</span>
+│   └── deploy.yml               <span style="color: #4ADE80;"># Automated GitHub Pages CI/CD pipeline</span>
+├── <span style="color: #FCD34D;">assets/</span>
+│   ├── images/banner.png        <span style="color: #94A3B8;"># Official 16:9 banner image</span>
+│   └── data/
+│       ├── resume_data.json          <span style="color: #38BDF8; font-weight: bold;"># Single source of truth (JSON Schema)</span>
+│       └── template_resume_data.json <span style="color: #94A3B8;"># Blank template for forkers</span>
+├── <span style="color: #FCD34D;">docs/</span>                        <span style="color: #94A3B8;"># Enterprise lifecycle governance documentation</span>
+│   ├── intent.md & spec.md      <span style="color: #94A3B8;"># Vision, scope & STRIDE threat model</span>
+│   ├── plan.md & REVIEW.md      <span style="color: #94A3B8;"># Vertical task slices & 5-axis review rubric</span>
+│   └── articles/                <span style="color: #94A3B8;"># LinkedIn pulse articles & visual suites</span>
+├── <span style="color: #FCD34D;">lib/</span>
+│   ├── models/resume_model.dart <span style="color: #A78BFA;"># Immutable typed domain models (null-safe)</span>
+│   ├── services/
+│   │   ├── resume_repository.dart <span style="color: #A78BFA;"># SharedPreferences & Asset JSON loader</span>
+│   │   └── pdf_export_service.dart<span style="color: #A78BFA;"># 300+ DPI vector PDF printing engine</span>
+│   ├── theme/neobrutalist_theme.dart <span style="color: #FB923C;"># Centralized design tokens (#ECE8DF, #DBD7CE)</span>
+│   ├── widgets/
+│   │   ├── brutalist_badge.dart      <span style="color: #F472B6;"># Tilted sticker badges (-3.5 deg)</span>
+│   │   ├── custom_icons.dart        <span style="color: #F472B6;"># CustomPainter vector smiley & asterisk</span>
+│   │   ├── floating_toolbar.dart    <span style="color: #F472B6;"># Capsule controls (Edit, Print, Reset)</span>
+│   │   └── resume_content_widgets.dart<span style="color: #F472B6;"># Modular section cards (Experience, Skills)</span>
+│   └── main.dart                <span style="color: #4ADE80;"># Reactive app entrypoint & state orchestration</span>
+├── <span style="color: #FCD34D;">test/</span>                        <span style="color: #4ADE80;"># Automated unit & widget regression test suite</span>
+└── <span style="color: #FCD34D;">web/index.html</span>               <span style="color: #F59E0B; font-weight: bold;"># Host shell with instant pure-CSS pre-loader</span>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- ========================================== -->
+    <!-- CARD 4: HOSTING COMPARISON MATRIX          -->
+    <!-- ========================================== -->
+    <article class="screenshot-card" id="card-hosting">
+      <div class="screenshot-header-strip">
+        <span class="screenshot-tag">📸 FIGURE 4 &bull; 📊 HOSTING PLATFORM DECISION MATRIX</span>
+        <span class="screenshot-res">GitHub Pages vs Firebase vs Vercel</span>
+      </div>
+      <div class="card-body">
+        
+        <h2 class="card-title">
+          <span>📊</span> Section 4: Hosting & Deployment — Where Should You Host?
+        </h2>
+        
+        <p>
+          Choosing the right hosting platform dictates ongoing maintenance overhead, zero-cost runway, and developer credibility. Here is how the top three platforms compare:
+        </p>
+
+        <div class="table-container">
+          <table class="brutalist-table">
+            <thead>
+              <tr>
+                <th>DECISION CRITERIA</th>
+                <th style="background: #E0E7FF; color: #1E3A8A;">🏆 GITHUB PAGES (WINNER)</th>
+                <th>🥈 FIREBASE HOSTING</th>
+                <th>VERCEL / NETLIFY</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight-row">
+                <td><strong>Hosting Cost</strong></td>
+                <td><strong>$0 / month (Unlimited for personal)</strong></td>
+                <td>$0 / month (Spark Tier - 360MB/day)</td>
+                <td>$0 / month (Hobby Tier)</td>
+              </tr>
+              <tr>
+                <td><strong>Setup Overhead</strong></td>
+                <td><strong>Zero CLI tools needed</strong> (Native)</td>
+                <td>Requires <code>firebase-tools</code> CLI & login</td>
+                <td>Requires external OAuth account link</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>Unified Credibility</strong></td>
+                <td><strong>100% Unified:</strong> Code, issues, PRs & website live in the exact same GitHub repo</td>
+                <td>External Google Cloud / Firebase console</td>
+                <td>External SaaS dashboard</td>
+              </tr>
+              <tr>
+                <td><strong>Custom Domain & SSL</strong></td>
+                <td>Yes (Automatic via <code>CNAME</code>)</td>
+                <td>Yes (Automatic SSL)</td>
+                <td>Yes (Automatic SSL)</td>
+              </tr>
+              <tr>
+                <td><strong>PR Preview Channels</strong></td>
+                <td>No (Single branch deploy)</td>
+                <td><strong>Yes (Ephemeral URLs per PR)</strong></td>
+                <td><strong>Yes (Instant preview branches)</strong></td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>Maintenance Burden</strong></td>
+                <td><strong>Zero Maintenance</strong> &bull; Fire-and-forget</td>
+                <td>Low (Token management)</td>
+                <td>Low</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p style="font-size: 0.9rem; color: #444444; margin-top: 10px;">
+          <strong>Why GitHub Pages Won:</strong> Recruiters can inspect the live interactive resume and immediately click <em>"View on GitHub"</em> to audit your real Git commit history, Clean Architecture widgets, and test suite in one unified visit.
+        </p>
+
+      </div>
+    </article>
+
+    <!-- ========================================== -->
+    <!-- CARD 5: GITHUB PAGES ROUTING HIERARCHY     -->
+    <!-- ========================================== -->
+    <article class="screenshot-card" id="card-routing">
+      <div class="screenshot-header-strip">
+        <span class="screenshot-tag">📸 FIGURE 5 &bull; 🌐 MULTI-PROJECT ROUTING & BASE-HREF</span>
+        <span class="screenshot-res">User Site vs Project Site Architecture</span>
+      </div>
+      <div class="card-body">
+        
+        <h2 class="card-title">
+          <span>🌐</span> Section 5: How GitHub Pages Routes Multiple Projects Without Collisions
+        </h2>
+        
+        <p>
+          A common architectural concern from senior engineers: <em>"I already have a personal portfolio at <code>https://jbavaji.github.io/</code>. Will deploying this resume overwrite my main website?"</em>
+        </p>
+        <p><strong>The Answer: No.</strong> GitHub Pages supports multi-tenant project routing:</p>
+
+        <div class="diagram-box">
+┌────────────────────────────────────────────────────────────────────────┐
+│                        GitHub Pages Architecture                       │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+           ┌────────────────────────┴────────────────────────┐
+           ▼                                                 ▼
+┌──────────────────────────────────────┐  ┌──────────────────────────────────────┐
+│       User/Organization Site         │  │             Project Site             │
+│    https://jbavaji.github.io/        │  │https://jbavaji.github.io/neobrutalist-resume/│
+│  (Repo: jbavaji/jbavaji.github.io)   │  │ (Repo: jbavaji/neobrutalist-resume)  │
+│  Serves your root personal portfolio │  │ Serves the independent Flutter app   │
+└──────────────────────────────────────┘  └──────────────────────────────────────┘
+        </div>
+
+        <h3 class="card-subtitle">The Critical Fix: Dynamic <code>--base-href</code></h3>
+        <p style="font-size: 0.9rem;">
+          When Flutter Web is hosted in a subfolder (like <code>/neobrutalist-resume/</code>), Flutter's asset loader must know its root path. Otherwise, the browser requests <code>main.dart.js</code> from root, throwing immediate <strong>404 Not Found</strong> crashes. We solved this dynamically in GitHub Actions:
+        </p>
+
+        <div class="code-box">
+          <div class="code-header">
+            <span>.github/workflows/deploy.yml</span>
+            <span>YAML</span>
+          </div>
+<span style="color: #60A5FA;">- name:</span> <span style="color: #FDE047;">Build Flutter Web Release</span>
+  <span style="color: #60A5FA;">run:</span> flutter build web --release --base-href <span style="color: #4ADE80;">"/${{ github.event.repository.name }}/"</span>
+        </div>
+
+        <p style="font-size: 0.86rem; color: #444444;">
+          Because <code>${{ github.event.repository.name }}</code> dynamically resolves to your repository name, <strong>you can name your repository whatever you want</strong>, and CI automatically injects the correct URL base path.
+        </p>
+
+      </div>
+    </article>
+
+    <!-- ========================================== -->
+    <!-- CARD 6: ZERO-BLOAT DATA LAYER (JSON)       -->
+    <!-- ========================================== -->
+    <article class="screenshot-card" id="card-json">
+      <div class="screenshot-header-strip">
+        <span class="screenshot-tag">📸 FIGURE 6 &bull; 📄 TYPED JSON SCHEMA ARCHITECTURE</span>
+        <span class="screenshot-res">assets/data/resume_data.json Schema</span>
+      </div>
+      <div class="card-body">
+        
+        <h2 class="card-title">
+          <span>📄</span> Section 6: The Zero-Bloat Data Layer (resume_data.json)
+        </h2>
+        
+        <p>
+          To ensure anyone can personalize their resume in under 60 seconds without knowing Flutter widget trees, all content is decoupled into a typed JSON schema in <code>assets/data/resume_data.json</code>:
+        </p>
+
+        <div class="code-box">
+          <div class="code-header">
+            <span>assets/data/resume_data.json</span>
+            <span>JSON</span>
+          </div>
+{
+  <span style="color: #93C5FD;">"nameFirst"</span>: <span style="color: #86EFAC;">"JAYESHGIRII"</span>,
+  <span style="color: #93C5FD;">"nameLast"</span>: <span style="color: #86EFAC;">"BAVAJI"</span>,
+  <span style="color: #93C5FD;">"bio"</span>: <span style="color: #86EFAC;">"Engineering Manager & Technical Architect based in Pune, India..."</span>,
+  <span style="color: #93C5FD;">"experience"</span>: [
+    {
+      <span style="color: #93C5FD;">"role"</span>: <span style="color: #86EFAC;">"Associate Specialist Technology (Mobile)"</span>,
+      <span style="color: #93C5FD;">"company"</span>: <span style="color: #86EFAC;">"Synechron Technology Pvt. Ltd."</span>,
+      <span style="color: #93C5FD;">"period"</span>: <span style="color: #86EFAC;">"2018 – Present (8+ Years)"</span>,
+      <span style="color: #93C5FD;">"bullets"</span>: [
+        <span style="color: #86EFAC;">"Lead architecture for Sandbox Platform (Azure/Kubernetes with React 19) & InfraSec.AI."</span>,
+        <span style="color: #86EFAC;">"Architected FinTouch collaboration platform (Flutter/Dart) & Web3 employee rewards app."</span>,
+        <span style="color: #86EFAC;">"Enforce CI/CD quality gates, mentor teams, and bridge product vision with shipped code."</span>
+      ]
+    }
+  ],
+  <span style="color: #93C5FD;">"skills"</span>: [
+    <span style="color: #86EFAC;">"Mobile & Cross-Platform (Flutter / React Native / Android)"</span>,
+    <span style="color: #86EFAC;">"Agentic AI & LLMs"</span>,
+    <span style="color: #86EFAC;">"Cloud & DevOps (Azure / Kubernetes / CI/CD)"</span>
+  ],
+  <span style="color: #93C5FD;">"contact"</span>: {
+    <span style="color: #93C5FD;">"email"</span>: <span style="color: #86EFAC;">"jbavaji@gmail.com"</span>,
+    <span style="color: #93C5FD;">"linkedin"</span>: <span style="color: #86EFAC;">"https://linkedin.com/in/jbavaji"</span>,
+    <span style="color: #93C5FD;">"website"</span>: <span style="color: #86EFAC;">"https://jbavaji.github.io"</span>
+  }
+}
+        </div>
+
+      </div>
+    </article>
+
+    <!-- ========================================== -->
+    <!-- CARD 7: COLD-START PERFORMANCE FIX         -->
+    <!-- ========================================== -->
+    <article class="screenshot-card" id="card-perf">
+      <div class="screenshot-header-strip">
+        <span class="screenshot-tag">📸 FIGURE 7 &bull; ⚡ COLD-START BLANK SCREEN FIX</span>
+        <span class="screenshot-res">Instant Pure-CSS Pre-Loader & Handshake</span>
+      </div>
+      <div class="card-body">
+        
+        <h2 class="card-title">
+          <span>⚡</span> Section 7: Slaying the Flutter Web Cold-Start "Blank Screen"
+        </h2>
+        
+        <p>
+          In Flutter Web, before Dart code can mount its first frame, the browser must fetch <code>flutter.js</code>, <code>canvaskit.wasm</code> (~8 MB), and <code>main.dart.js</code> (~3 MB). Without a pre-loader, users experience a <strong>jarring 2–4 second blank beige screen</strong>.
+        </p>
+
+        <div class="compare-grid">
+          
+          <div class="compare-box bad">
+            <div class="compare-header" style="color: #991B1B;">
+              <span>❌</span> DEFAULT FLUTTER WEB (COLD START)
+            </div>
+            <p style="font-size: 0.85rem;">
+              Empty <code>&lt;body&gt;</code> tag. The user stares at a blank screen for 3,000ms while large WebAssembly packages download over the wire. High bounce rates.
+            </p>
+          </div>
+
+          <div class="compare-box good">
+            <div class="compare-header" style="color: #065F46;">
+              <span>✅</span> INSTANT PURE-CSS PRE-LOADER (&lt; 20ms)
+            </div>
+            <p style="font-size: 0.85rem;">
+              Renders immediately upon HTTP response with zero JS dependencies. Branded with Neobrutalist borders, tilted badge, and electric blue progress runner.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="code-box">
+          <div class="code-header">
+            <span>web/index.html &bull; Handshake Protocol</span>
+            <span>JavaScript</span>
+          </div>
+<span style="color: #94A3B8;">// 1. Observe when Flutter engine mounts its root view into the DOM</span>
+<span style="color: #60A5FA;">const</span> observer = <span style="color: #60A5FA;">new</span> MutationObserver(() => {
+  <span style="color: #60A5FA;">const</span> fltView = document.querySelector(<span style="color: #86EFAC;">'flutter-view'</span>);
+  <span style="color: #60A5FA;">if</span> (fltView) {
+    splash.style.opacity = <span style="color: #F87171;">'0'</span>; <span style="color: #94A3B8;">// Smooth 300ms fadeout transition</span>
+    setTimeout(() => splash.remove(), <span style="color: #FCD34D;">300</span>);
+    observer.disconnect();
+  }
+});
+observer.observe(document.body, { childList: <span style="color: #60A5FA;">true</span>, subtree: <span style="color: #60A5FA;">true</span> });
+        </div>
+
+      </div>
+    </article>
+
+    <!-- ========================================== -->
+    <!-- CARD 8: 1-MINUTE FORK & DEPLOY BLUEPRINT   -->
+    <!-- ========================================== -->
+    <article class="screenshot-card" id="card-deploy">
+      <div class="screenshot-header-strip">
+        <span class="screenshot-tag">📸 FIGURE 8 &bull; 🚀 1-MINUTE FORK & DEPLOY BLUEPRINT</span>
+        <span class="screenshot-res">4-Step Quick Launch Guide</span>
+      </div>
+      <div class="card-body">
+        
+        <h2 class="card-title">
+          <span>🚀</span> Section 8: Fork & Deploy Your Own in 1 Minute
+        </h2>
+        
+        <p>
+          You don't need Flutter installed locally to launch your own resume. The entire build and release lifecycle is automated through GitHub Actions:
+        </p>
+
+        <div class="step-grid">
+          
+          <div class="step-card">
+            <div class="step-num-badge">1</div>
+            <div class="step-title">Fork the Repository</div>
+            <div class="step-desc">
+              Navigate to <strong>github.com/JBavaji/neobrutalist-resume</strong> and click <strong>Fork</strong> to duplicate the repository into your GitHub account.
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num-badge">2</div>
+            <div class="step-title">Personalize Your Data</div>
+            <div class="step-desc">
+              Edit <code>assets/data/resume_data.json</code> directly in the GitHub web editor with your name, experience, skills, and links.
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num-badge">3</div>
+            <div class="step-title">Enable GitHub Actions</div>
+            <div class="step-desc">
+              Go to <strong>Settings &gt; Pages</strong> in your repository. Under <em>Build and deployment &gt; Source</em>, select <strong>GitHub Actions</strong>.
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num-badge">4</div>
+            <div class="step-title">Push to Main</div>
+            <div class="step-desc">
+              Commit your changes. GitHub Actions automatically builds and deploys your resume to: <code>https://&lt;username&gt;.github.io/neobrutalist-resume/</code>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </article>
+
+    <!-- ========================================== -->
+    <!-- CARD 9: EXECUTIVE LEADERSHIP CALL-TO-ACTION-->
+    <!-- ========================================== -->
+    <article class="screenshot-card" id="card-cta">
+      <div class="screenshot-header-strip">
+        <span class="screenshot-tag">📸 FIGURE 9 &bull; 🎯 EXECUTIVE LEADERSHIP CALL-TO-ACTION</span>
+        <span class="screenshot-res">Open for Strategic Opportunities</span>
+      </div>
+      <div class="card-body">
+        
+        <h2 class="card-title">
+          <span>🎯</span> Section 9: Exploring My Next Leadership Chapter
+        </h2>
+
+        <div class="cta-card">
+          <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 6px;">
+            Actively Open to Senior Leadership Roles:
+          </h3>
+          <div class="roles-list">
+            <span class="role-badge">→ Engineering Manager</span>
+            <span class="role-badge">→ Mobile Engineering Leader</span>
+            <span class="role-badge">→ Principal Mobile Architect</span>
+          </div>
+
+          <p style="font-size: 0.95rem; line-height: 1.5; color: #1E293B;">
+            If you are a <strong>Founder, CTO, VP of Engineering, or Talent Partner</strong> looking for a leader who bridges deep mobile engineering roots (14+ years) with modern Agentic AI workflows, robust DevOps governance, and scalable team architectures, my DMs are open — let's connect.
+          </p>
+
+          <div class="btn-group">
+            <a href="https://jbavaji.github.io/neobrutalist-resume/" target="_blank" class="btn-brutalist btn-primary">
+              <span>🌐</span> View Live Resume
+            </a>
+            <a href="https://github.com/JBavaji/neobrutalist-resume" target="_blank" class="btn-brutalist">
+              <span>⭐</span> Star on GitHub
+            </a>
+            <a href="https://linkedin.com/in/jbavaji" target="_blank" class="btn-brutalist">
+              <span>💼</span> Connect on LinkedIn
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+  </div>
+
+  <script>
+    function toggleMarkers() {
+      document.body.classList.toggle('hide-markers');
+    }
+  </script>
+
+</body>
+</html>
