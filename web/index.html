@@ -175,25 +175,26 @@
 
     // Safety MutationObserver: dismiss loader immediately when Flutter view is mounted
     const observer = new MutationObserver(function(mutations, obs) {
-      if (document.querySelector('flutter-view, flt-glass-pane')) {
+      if (document.querySelector('flutter-view, flt-glass-pane, flt-scene-host')) {
         dismissLoader();
         obs.disconnect();
       }
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
-    // Hard fallback timeout (8s)
-    setTimeout(dismissLoader, 8000);
+    // Hard fallback timeout (10s)
+    setTimeout(dismissLoader, 10000);
 
     window.addEventListener('load', function(ev) {
-      _flutter.loader.load({
-        serviceWorkerSettings: {
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
           serviceWorkerVersion: {{flutter_service_worker_version}},
         },
-        onEntrypointLoaded: async function(engineInitializer) {
-          const appRunner = await engineInitializer.initializeEngine();
-          dismissLoader();
-          await appRunner.runApp();
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            dismissLoader();
+            appRunner.runApp();
+          });
         }
       });
     });
