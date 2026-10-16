@@ -6,7 +6,11 @@
 [![AI-SDLC Compliant](https://img.shields.io/badge/AI--SDLC-Compliant%20v1.0-4F46E5?style=for-the-badge)](docs/intent.md)
 [![Deploy to GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Automated%20CI%2FCD-181717?style=for-the-badge&logo=github)](https://pages.github.com/)
 
-A flagship, open-source **Neobrutalist & Warm Editorial** executive resume and developer portfolio template built with **Flutter Web and Dart**.
+<p align="center">
+  <img src="assets/images/banner.png" alt="Flutter Neobrutalist Developer Resume Banner" width="100%">
+</p>
+
+A flagship, open-source **Neobrutalist & Warm Editorial** executive resume template built with **Flutter Web and Dart**.
 
 > 🌐 **Live Demo:** [https://jbavaji.github.io/neobrutalist-resume/](https://jbavaji.github.io/neobrutalist-resume/)
 
