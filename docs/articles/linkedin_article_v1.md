@@ -196,31 +196,16 @@ Because `${{ github.event.repository.name }}` dynamically resolves to your repos
 
 ## 📄 The Zero-Bloat Data Layer: `resume_data.json`
 
-A common anti-pattern in developer resume and portfolio templates is **hardcoding personal career data directly inside UI widget trees**.
+A common anti-pattern in developer templates is **hardcoding personal content directly inside UI widgets**, forcing forkers to untangle complex widget trees just to update their work history.
 
-When templates bury job titles, bullet points, and contact links inside deeply nested `Row`, `Column`, and `Text` widgets, adopting the template becomes an agonizing chore. Developers are forced to spend hours understanding complex framework state logic and component trees just to update their employment dates.
+To make adoption seamless, 100% of the resume content is decoupled into a typed JSON schema in [`assets/data/resume_data.json`](assets/data/resume_data.json).
 
-To eliminate this friction and make this resume universally adoptable by any engineer, I decoupled the entire application state into a clean, typed JSON schema located at [`assets/data/resume_data.json`](assets/data/resume_data.json).
+### 4 Architectural Benefits of a Decoupled Data Layer:
 
-### The 4 Architectural Benefits of a Decoupled JSON Data Layer:
-
-#### 1. Zero Flutter or Dart Knowledge Required (Radical Accessibility)
-You do not need to know Flutter, understand `BuildContext`, or know how the reactive widget tree mounts to launch your own resume. Whether you are a backend architect, DevOps engineer, product lead, or iOS developer, you can customize 100% of the resume simply by opening `assets/data/resume_data.json` in GitHub's web editor, modifying your personal information, and committing.
-
-#### 2. Git as the Zero-Cost Headless CMS
-Most modern dynamic portfolios introduce dependencies on third-party headless CMS platforms (Contentful, Strapi, Sanity) or cloud databases (Firebase Firestore, Supabase). This adds API key management, latency, network failure points, and recurring monthly subscription fees. By housing your career data directly in a version-controlled JSON file, **Git becomes your Headless CMS**. Every career milestone, skill addition, or project update is an auditable, rollback-safe Git commit with zero operational cost.
-
-#### 3. Defensive Deserialization & STRIDE Security Resilience
-In client-side single-page applications, a malformed JSON payload, missing key, or unexpected type usually triggers runtime null assertions or the dreaded Flutter "Red Screen of Death". To protect against this, our data layer enforces strict defensive deserialization in `ResumeData.fromJson`:
-* Every single field is wrapped with safe fallback defaults (empty lists, fallback labels, default contact schemes).
-* Missing, empty, or corrupted JSON properties degrade gracefully without crashing the UI.
-* External URLs are validated against allowed URI schemes (`https`, `mailto`, `tel`) to block script injection.
-
-#### 4. Dual-Layer Persistence Architecture (Immutable Asset + SharedPreferences)
-The data layer is orchestrated through a dual-source repository pattern (`ResumeRepository`):
-* **Production Baseline:** The app bundles `assets/data/resume_data.json` as the immutable, production-grade single source of truth.
-* **Live In-Browser Drafts:** When you toggle inline editing in your browser, your drafts are immediately synchronized to local storage via `SharedPreferences`.
-* **Zero-Risk Experimentation:** A single tap on the floating toolbar's **"Reset"** button clears local overrides and restores the pristine JSON baseline, letting forkers experiment freely without corrupting their site.
+* **Zero Flutter Knowledge Required:** Backend engineers, DevOps leads, and managers can customize their full resume in 60 seconds simply by editing a JSON file directly in GitHub's web editor without touching Dart or widget trees.
+* **Git as the Zero-Cost Headless CMS:** Eliminates paid CMS tools (Strapi, Sanity) and cloud databases (Firestore, Supabase). Every career update is an auditable, rollback-safe Git commit with zero monthly bills.
+* **Defensive Deserialization & Null-Safety:** Powered by immutable Dart models with safe fallbacks in `ResumeData.fromJson`. Missing keys or empty arrays degrade gracefully without triggering the Flutter "Red Screen of Death".
+* **Dual-Layer Persistence:** Bundles an immutable production asset with browser `SharedPreferences` for live in-browser WYSIWYG editing, backed by a 1-click **"Reset"** button to restore the master baseline anytime.
 
 ---
 
