@@ -1,0 +1,43 @@
+name: 💡 Feature Request
+description: Propose a new feature, widget, or enhancement for the Neobrutalist Resume template.
+title: "[FEAT]: "
+labels: ["enhancement", "proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea to make this Neobrutalist Resume template even better? Let us know!
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your feature request related to a problem?
+      description: A clear and concise description of what the limitation is.
+      placeholder: "e.g., I'm always frustrated when I want to add multiple external publication links in the projects section."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution / Enhancement
+      description: Describe what you would like to see added.
+      placeholder: "Add an optional 'links' array to ProjectItem in assets/data/resume_data.json and render them as tactile chips."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative solutions or features you've considered.
+
+  - type: checkboxes
+    id: design_tokens
+    attributes:
+      label: Neobrutalist Alignment
+      options:
+        - label: This proposed feature preserves Neobrutalist design tokens (hard borders, high contrast, warm editorial canvas).
+          required: true
+        - label: This proposed feature is data-driven and configurable via `resume_data.json` with zero hardcoding.
+          required: true

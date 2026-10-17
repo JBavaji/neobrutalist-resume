@@ -1,0 +1,65 @@
+name: 🐛 Bug Report
+description: Create a report to help us fix a defect or layout issue.
+title: "[BUG]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue! Before submitting, please ensure the bug hasn't already been reported in open issues.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: "e.g., RenderFlex overflow occurs when viewing the experience section on mobile browsers."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Step-by-step instructions to reproduce the behavior.
+      placeholder: |
+        1. Open https://jbavaji.github.io/neobrutalist-resume/
+        2. Resize viewport to 375px
+        3. Observe overflow error in console / screen
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen.
+      placeholder: "Layout wraps cleanly into a single vertical column without overflow."
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment & Browser
+      description: "Browser version, OS, and device (e.g. Chrome 124 on macOS Sonoma, Safari iOS 17.4)."
+      placeholder: "Chrome 125, macOS 14.5"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console Logs or Stack Traces
+      description: Paste any error messages from the browser developer tools console.
+      render: shell
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Verification Checklist
+      options:
+        - label: I have verified this bug exists on the latest `main` branch.
+          required: true
+        - label: I checked existing issues to ensure this is not a duplicate.
+          required: true

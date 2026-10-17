@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 AI-SDLC Documentation
+    url: https://github.com/JBavaji/neobrutalist-resume/tree/main/docs
+    about: Read the complete architecture specifications, threat model, and review rubrics.
+  - name: 🌐 Live Resume Demo
+    url: https://jbavaji.github.io/neobrutalist-resume/
+    about: View the live production deployment hosted on GitHub Pages.
+  - name: 💬 Questions & Career Inquiries
+    url: https://linkedin.com/in/jbavaji
+    about: Connect with author Jayeshgiri R. Bavaji on LinkedIn.

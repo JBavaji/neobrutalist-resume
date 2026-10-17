@@ -1,0 +1,60 @@
+name: CI Quality Gate
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'assets/images/**'
+      - '.gitignore'
+      - 'LICENSE'
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'assets/images/**'
+      - '.gitignore'
+      - 'LICENSE'
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify Lint, Tests & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Verify Environment & Install Dependencies
+        run: |
+          flutter --version
+          flutter pub get
+
+      - name: Run Static Analysis & Format Check
+        run: |
+          dart format --output=none --set-exit-if-changed .
+          flutter analyze
+
+      - name: Run Token Audit (Design Token Guard)
+        run: |
+          bash .agent/security/token-audit.sh
+
+      - name: Run Unit & Widget Tests
+        run: |
+          flutter test --coverage
+
+      - name: Verify Production Web Compilation
+        run: |
+          flutter build web --release --base-href "/${{ github.event.repository.name }}/"
