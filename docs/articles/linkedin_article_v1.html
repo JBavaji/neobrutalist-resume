@@ -485,11 +485,23 @@
       border-radius: var(--radius-md);
       padding: 20px;
       margin: 20px 0;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.82rem;
-      line-height: 1.5;
       overflow-x: auto;
       box-shadow: var(--shadow-md);
+    }
+
+    .diagram-box pre,
+    pre.diagram-pre,
+    pre.tree-pre {
+      margin: 0;
+      padding: 0;
+      font-family: 'Space Mono', 'SF Mono', Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      white-space: pre !important;
+      tab-size: 2;
+      -moz-tab-size: 2;
+      overflow-x: auto;
+      color: #F8FAFC;
     }
 
     /* Code Snippet Box */
@@ -500,9 +512,6 @@
       border-radius: var(--radius-md);
       padding: 18px 20px;
       margin: 18px 0;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.78rem;
-      line-height: 1.5;
       overflow-x: auto;
       box-shadow: var(--shadow-sm);
     }
@@ -513,9 +522,221 @@
       align-items: center;
       border-bottom: 1px solid #334155;
       padding-bottom: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       color: #94A3B8;
+      font-family: 'Space Mono', monospace;
       font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      white-space: normal;
+    }
+
+    .code-box pre,
+    pre.code-pre {
+      margin: 0;
+      padding: 0;
+      font-family: 'Space Mono', 'SF Mono', Menlo, Consolas, monospace;
+      font-size: 0.80rem;
+      line-height: 1.55;
+      white-space: pre !important;
+      tab-size: 2;
+      -moz-tab-size: 2;
+      overflow-x: auto;
+      color: #E2E8F0;
+    }
+
+    .code-box code {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      white-space: pre !important;
+      display: block;
+    }
+
+    /* Architecture Layer Grid (Section 3) */
+    .layer-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 18px 0 20px 0;
+    }
+
+    @media (max-width: 680px) {
+      .layer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .layer-card {
+      border: var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      background: var(--card-tint);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .layer-card-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      margin: 8px 0 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .layer-card-desc {
+      font-size: 0.82rem;
+      color: #444444;
+      line-height: 1.4;
+    }
+
+    /* Visual Architecture Flow (Section 5) */
+    .visual-arch-card {
+      background: var(--card-tint);
+      border: var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      margin: 20px 0;
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+
+    .arch-root-node {
+      background: var(--ink);
+      color: #FFFFFF;
+      border: var(--border-thin);
+      border-radius: var(--radius-sm);
+      padding: 14px 20px;
+      display: inline-block;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: var(--shadow-sm);
+      text-align: left;
+    }
+
+    .arch-root-header {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-blue-light);
+      margin-bottom: 4px;
+    }
+
+    .arch-root-url {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .arch-connector-branch {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 14px 0;
+      color: var(--ink);
+      font-family: 'Space Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      gap: 16px;
+    }
+
+    .arch-connector-line {
+      display: inline-block;
+      width: 60px;
+      height: 2px;
+      background: var(--ink);
+    }
+
+    .arch-leaf-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      text-align: left;
+    }
+
+    @media (max-width: 680px) {
+      .arch-leaf-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .arch-leaf-card {
+      background: var(--card-white);
+      border: var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .arch-leaf-url {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin: 10px 0 6px 0;
+      color: var(--ink);
+      word-break: break-all;
+    }
+
+    .arch-leaf-repo {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.76rem;
+      color: var(--ink-muted);
+      margin-bottom: 8px;
+    }
+
+    .arch-leaf-desc {
+      font-size: 0.82rem;
+      color: #333333;
+      line-height: 1.4;
+    }
+
+    /* Sequence Flow (Section 7) */
+    .sequence-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    @media (max-width: 768px) {
+      .sequence-flow {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .seq-step {
+      border: var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--card-white);
+      padding: 12px 10px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .seq-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      padding: 2px 6px;
+      border-radius: 3px;
+      width: fit-content;
+      margin-bottom: 6px;
+    }
+
+    .seq-title {
+      font-size: 0.84rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .seq-desc {
+      font-size: 0.74rem;
+      color: #444444;
+      line-height: 1.35;
     }
 
     /* Step Grid */
@@ -856,11 +1077,39 @@
         </h2>
         
         <p>
-          Clean architecture ensures that presentation widgets, data models, persistence services, and export drivers remain completely decoupled.
+          Clean architecture ensures that presentation widgets, domain models, persistence services, and export drivers remain completely decoupled.
         </p>
 
+        <!-- 4-Layer Architecture Highlights -->
+        <div class="layer-grid">
+          <div class="layer-card">
+            <span class="chip chip-blue">DOMAIN MODELS</span>
+            <div class="layer-card-title"><code>lib/models/</code></div>
+            <div class="layer-card-desc">Immutable, type-safe data models with null-safe defensive deserialization (<code>fromJson</code> / <code>toJson</code> / <code>copyWith</code>).</div>
+          </div>
+          <div class="layer-card">
+            <span class="chip chip-amber">DATA & REPOSITORY</span>
+            <div class="layer-card-title"><code>lib/services/</code></div>
+            <div class="layer-card-desc">Asset JSON bundle loader, SharedPreferences persistence layer, and 300+ DPI vector PDF export engine.</div>
+          </div>
+          <div class="layer-card">
+            <span class="chip chip-purple">NEOBRUTALIST UI</span>
+            <div class="layer-card-title"><code>lib/widgets/ & lib/theme/</code></div>
+            <div class="layer-card-desc">Responsive layouts, tilted sticker badges, CustomPainter vectors (Smiley, Asterisk), and WYSIWYG editor.</div>
+          </div>
+          <div class="layer-card">
+            <span class="chip chip-green">DEVOPS & GOVERNANCE</span>
+            <div class="layer-card-title"><code>.github/ & .agent/</code></div>
+            <div class="layer-card-desc">Automated GitHub Pages CI/CD workflow, token leak audit scripts, and deterministic Makefile quality gates.</div>
+          </div>
+        </div>
+
         <div class="diagram-box">
-<span style="color: #60A5FA; font-weight: bold;">neobrutalist-resume/</span>
+          <div class="code-header">
+            <span>REPOSITORY FILE TREE</span>
+            <span>CLEAN ARCHITECTURE</span>
+          </div>
+          <pre class="tree-pre"><span style="color: #60A5FA; font-weight: bold;">neobrutalist-resume/</span>
 ├── <span style="color: #FCD34D;">.agent/</span>                      <span style="color: #94A3B8;"># AI-SDLC meta-governance & token audit harness</span>
 │   ├── rules/inversion-protocol.md
 │   └── security/token-audit.sh
@@ -888,7 +1137,7 @@
 │   │   └── resume_content_widgets.dart<span style="color: #F472B6;"># Modular section cards (Experience, Skills)</span>
 │   └── main.dart                <span style="color: #4ADE80;"># Reactive app entrypoint & state orchestration</span>
 ├── <span style="color: #FCD34D;">test/</span>                        <span style="color: #4ADE80;"># Automated unit & widget regression test suite</span>
-└── <span style="color: #FCD34D;">web/index.html</span>               <span style="color: #F59E0B; font-weight: bold;"># Host shell with instant pure-CSS pre-loader</span>
+└── <span style="color: #FCD34D;">web/index.html</span>               <span style="color: #F59E0B; font-weight: bold;"># Host shell with instant pure-CSS pre-loader</span></pre>
         </div>
 
       </div>
@@ -987,10 +1236,43 @@
         <p>
           A common architectural concern from senior engineers: <em>"I already have a personal portfolio at <code>https://jbavaji.github.io/</code>. Will deploying this resume overwrite my main website?"</em>
         </p>
-        <p><strong>The Answer: No.</strong> GitHub Pages supports multi-tenant project routing:</p>
+        <p><strong>The Answer: No.</strong> GitHub Pages supports clean multi-tenant project routing:</p>
 
+        <!-- Visual Architecture Flow Graphic -->
+        <div class="visual-arch-card">
+          <div class="arch-root-node">
+            <div class="arch-root-header">🌐 GITHUB PAGES HOST ROOT DOMAIN</div>
+            <div class="arch-root-url">https://jbavaji.github.io/</div>
+          </div>
+          
+          <div class="arch-connector-branch">
+            <span>┌</span><span class="arch-connector-line"></span><span>┴</span><span class="arch-connector-line"></span><span>┐</span>
+          </div>
+
+          <div class="arch-leaf-container">
+            <div class="arch-leaf-card" style="border-top: 4px solid var(--accent-amber);">
+              <span class="chip chip-amber">USER / ORG ROOT SITE</span>
+              <div class="arch-leaf-url">https://jbavaji.github.io/</div>
+              <div class="arch-leaf-repo">Repo: <code>jbavaji/jbavaji.github.io</code></div>
+              <div class="arch-leaf-desc">Serves your root personal portfolio, tech blog, or landing page without interference.</div>
+            </div>
+
+            <div class="arch-leaf-card" style="border-top: 4px solid var(--accent-green);">
+              <span class="chip chip-green">PROJECT SUBFOLDER ROUTE</span>
+              <div class="arch-leaf-url">https://jbavaji.github.io/neobrutalist-resume/</div>
+              <div class="arch-leaf-repo">Repo: <code>jbavaji/neobrutalist-resume</code></div>
+              <div class="arch-leaf-desc">Serves the independent Flutter Web Neobrutalist Resume app in its own isolated subpath.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ASCII Architecture Blueprint Box -->
         <div class="diagram-box">
-┌────────────────────────────────────────────────────────────────────────┐
+          <div class="code-header">
+            <span>GITHUB PAGES ROUTING TOPOLOGY</span>
+            <span>TOPOLOGY BLUEPRINT</span>
+          </div>
+          <pre class="diagram-pre">┌────────────────────────────────────────────────────────────────────────┐
 │                        GitHub Pages Architecture                       │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
@@ -1001,7 +1283,7 @@
 │    https://jbavaji.github.io/        │  │https://jbavaji.github.io/neobrutalist-resume/│
 │  (Repo: jbavaji/jbavaji.github.io)   │  │ (Repo: jbavaji/neobrutalist-resume)  │
 │  Serves your root personal portfolio │  │ Serves the independent Flutter app   │
-└──────────────────────────────────────┘  └──────────────────────────────────────┘
+└──────────────────────────────────────┘  └──────────────────────────────────────┘</pre>
         </div>
 
         <h3 class="card-subtitle">The Critical Fix: Dynamic <code>--base-href</code></h3>
@@ -1014,8 +1296,8 @@
             <span>.github/workflows/deploy.yml</span>
             <span>YAML</span>
           </div>
-<span style="color: #60A5FA;">- name:</span> <span style="color: #FDE047;">Build Flutter Web Release</span>
-  <span style="color: #60A5FA;">run:</span> flutter build web --release --base-href <span style="color: #4ADE80;">"/${{ github.event.repository.name }}/"</span>
+          <pre class="code-pre"><code class="language-yaml"><span style="color: #60A5FA;">- name:</span> <span style="color: #FDE047;">Build Flutter Web Release</span>
+  <span style="color: #60A5FA;">run:</span> flutter build web --release --base-href <span style="color: #4ADE80;">"/${{ github.event.repository.name }}/"</span></code></pre>
         </div>
 
         <p style="font-size: 0.86rem; color: #444444;">
@@ -1043,12 +1325,19 @@
           To ensure anyone can personalize their resume in under 60 seconds without knowing Flutter widget trees, all content is decoupled into a typed JSON schema in <code>assets/data/resume_data.json</code>:
         </p>
 
+        <!-- Key Architectural Value Props -->
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+          <span class="chip chip-blue">⚡ ZERO FLUTTER KNOWLEDGE REQUIRED</span>
+          <span class="chip chip-green">🛡️ 100% TYPED & NULL-SAFE</span>
+          <span class="chip chip-amber">💾 ASSET + PREFERENCES FALLBACK</span>
+        </div>
+
         <div class="code-box">
           <div class="code-header">
             <span>assets/data/resume_data.json</span>
-            <span>JSON</span>
+            <span>JSON SCHEMA</span>
           </div>
-{
+          <pre class="code-pre"><code class="language-json">{
   <span style="color: #93C5FD;">"nameFirst"</span>: <span style="color: #86EFAC;">"JAYESHGIRII"</span>,
   <span style="color: #93C5FD;">"nameLast"</span>: <span style="color: #86EFAC;">"BAVAJI"</span>,
   <span style="color: #93C5FD;">"bio"</span>: <span style="color: #86EFAC;">"Engineering Manager & Technical Architect based in Pune, India..."</span>,
@@ -1074,7 +1363,7 @@
     <span style="color: #93C5FD;">"linkedin"</span>: <span style="color: #86EFAC;">"https://linkedin.com/in/jbavaji"</span>,
     <span style="color: #93C5FD;">"website"</span>: <span style="color: #86EFAC;">"https://jbavaji.github.io"</span>
   }
-}
+}</code></pre>
         </div>
 
       </div>
@@ -1120,12 +1409,37 @@
 
         </div>
 
+        <!-- 4-Phase Handshake Sequence Flow -->
+        <h3 class="card-subtitle">Architecture: The 4-Phase Engine Handshake Protocol</h3>
+        <div class="sequence-flow">
+          <div class="seq-step">
+            <span class="seq-num">PHASE 1</span>
+            <div class="seq-title">Instant Paint (&lt;20ms)</div>
+            <div class="seq-desc">HTTP response loads pure-CSS Neobrutalist Splash Card before any JS is evaluated.</div>
+          </div>
+          <div class="seq-step">
+            <span class="seq-num">PHASE 2</span>
+            <div class="seq-title">Engine Download (1.5s)</div>
+            <div class="seq-desc">Browser streams <code>canvaskit.wasm</code> (~8MB) & <code>main.dart.js</code> in background.</div>
+          </div>
+          <div class="seq-step">
+            <span class="seq-num">PHASE 3</span>
+            <div class="seq-title">DOM Injection</div>
+            <div class="seq-desc">Flutter Web engine bootstraps and injects <code>&lt;flutter-view&gt;</code> into DOM.</div>
+          </div>
+          <div class="seq-step">
+            <span class="seq-num">PHASE 4</span>
+            <div class="seq-title">Observer Handshake</div>
+            <div class="seq-desc"><code>MutationObserver</code> detects root view, smoothly triggers 300ms fadeout, and removes splash.</div>
+          </div>
+        </div>
+
         <div class="code-box">
           <div class="code-header">
             <span>web/index.html &bull; Handshake Protocol</span>
-            <span>JavaScript</span>
+            <span>JAVASCRIPT</span>
           </div>
-<span style="color: #94A3B8;">// 1. Observe when Flutter engine mounts its root view into the DOM</span>
+          <pre class="code-pre"><code class="language-js"><span style="color: #94A3B8;">// 1. Observe when Flutter engine mounts its root view into the DOM</span>
 <span style="color: #60A5FA;">const</span> observer = <span style="color: #60A5FA;">new</span> MutationObserver(() => {
   <span style="color: #60A5FA;">const</span> fltView = document.querySelector(<span style="color: #86EFAC;">'flutter-view'</span>);
   <span style="color: #60A5FA;">if</span> (fltView) {
@@ -1134,7 +1448,7 @@
     observer.disconnect();
   }
 });
-observer.observe(document.body, { childList: <span style="color: #60A5FA;">true</span>, subtree: <span style="color: #60A5FA;">true</span> });
+observer.observe(document.body, { childList: <span style="color: #60A5FA;">true</span>, subtree: <span style="color: #60A5FA;">true</span> });</code></pre>
         </div>
 
       </div>
