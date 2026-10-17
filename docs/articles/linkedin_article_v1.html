@@ -1324,20 +1324,43 @@
         </h2>
         
         <p>
-          To ensure anyone can personalize their resume in under 60 seconds without knowing Flutter widget trees, all content is decoupled into a typed JSON schema in <code>assets/data/resume_data.json</code>:
+          A common anti-pattern in developer resume and portfolio templates is <strong>hardcoding personal career data directly inside UI widget trees</strong>. When templates bury job titles, bullet points, and links inside deeply nested <code>Row</code>, <code>Column</code>, and <code>Text</code> widgets, adopting the template requires developers to untangle hundreds of lines of complex framework code just to update employment dates.
+        </p>
+        <p>
+          To eliminate adoption friction, this project decouples 100% of personal data into a single, clean typed JSON schema located at <code>assets/data/resume_data.json</code>.
         </p>
 
-        <!-- Key Architectural Value Props -->
-        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
-          <span class="chip chip-blue">⚡ ZERO FLUTTER KNOWLEDGE REQUIRED</span>
-          <span class="chip chip-green">🛡️ 100% TYPED & NULL-SAFE</span>
-          <span class="chip chip-amber">💾 ASSET + PREFERENCES FALLBACK</span>
+        <!-- 4 Architectural Benefits Grid -->
+        <div class="layer-grid" style="margin: 20px 0;">
+          <div class="layer-card" style="border-left: 4px solid var(--accent-blue);">
+            <span class="chip chip-blue">BENEFIT 1 &bull; RADICAL ACCESSIBILITY</span>
+            <div class="layer-card-title">⚡ Zero Flutter Knowledge Required</div>
+            <div class="layer-card-desc">Backend devs, DevOps engineers, and managers can customize their full resume simply by editing a standard JSON file in GitHub's web editor without touching Dart or widget trees.</div>
+          </div>
+
+          <div class="layer-card" style="border-left: 4px solid var(--accent-green);">
+            <span class="chip chip-green">BENEFIT 2 &bull; ZERO INFRASTRUCTURE</span>
+            <div class="layer-card-title">📦 Git as the Headless CMS</div>
+            <div class="layer-card-desc">Eliminates paid third-party CMS platforms (Strapi, Sanity) and cloud databases (Firestore, Supabase). Your Git commit history provides 100% version control, rollback safety, and zero monthly fees.</div>
+          </div>
+
+          <div class="layer-card" style="border-left: 4px solid var(--accent-amber);">
+            <span class="chip chip-amber">BENEFIT 3 &bull; STRIDE RESILIENCE</span>
+            <div class="layer-card-title">🛡️ Defensive Deserialization & Null Safety</div>
+            <div class="layer-card-desc">Every field in <code>ResumeData.fromJson</code> has null-safe fallbacks. Even if keys are omitted or arrays are empty, the app renders gracefully without the Flutter "Red Screen of Death".</div>
+          </div>
+
+          <div class="layer-card" style="border-left: 4px solid var(--accent-purple);">
+            <span class="chip chip-purple">BENEFIT 4 &bull; HYBRID PERSISTENCE</span>
+            <div class="layer-card-title">💾 Dual-Layer Persistence Architecture</div>
+            <div class="layer-card-desc">Combines the bundled immutable JSON asset with browser <code>SharedPreferences</code> for instant WYSIWYG editing drafts, plus a 1-click "Reset" button to restore the master baseline anytime.</div>
+          </div>
         </div>
 
         <div class="code-box">
           <div class="code-header">
-            <span>assets/data/resume_data.json</span>
-            <span>JSON SCHEMA</span>
+            <span>assets/data/resume_data.json &bull; TYPED SCHEMA</span>
+            <span>JSON CODE CARD (SCREENSHOT TARGET)</span>
           </div>
           <pre class="code-pre"><code class="language-json">{
   <span style="color: #93C5FD;">"nameFirst"</span>: <span style="color: #86EFAC;">"JAYESHGIRII"</span>,
