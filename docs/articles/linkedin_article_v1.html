@@ -116,9 +116,10 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 24px 20px;
+      padding: 32px 24px;
+      transition: max-width 0.2s ease;
     }
 
     /* Screenshot Card Frame */
@@ -608,7 +609,7 @@
       border-radius: var(--radius-sm);
       padding: 14px 20px;
       display: inline-block;
-      max-width: 520px;
+      max-width: 640px;
       width: 100%;
       box-shadow: var(--shadow-sm);
       text-align: left;
@@ -879,6 +880,7 @@
       <a href="#card-deploy" class="toolbar-btn">Deploy Steps</a>
       <a href="#card-cta" class="toolbar-btn">Leadership CTA</a>
       <button class="toolbar-btn toggle-btn" onclick="toggleMarkers()">Toggle Labels</button>
+      <button class="toolbar-btn toggle-btn" onclick="cycleWidth()">Width: <span id="width-label">Wide (1200px)</span></button>
       <button class="toolbar-btn toggle-btn" onclick="window.print()">Print / PDF</button>
     </div>
   </header>
@@ -1560,6 +1562,16 @@ observer.observe(document.body, { childList: <span style="color: #60A5FA;">true<
   <script>
     function toggleMarkers() {
       document.body.classList.toggle('hide-markers');
+    }
+
+    let currentWidthIdx = 0;
+    const widths = ['1200px', '1400px', '960px'];
+    const widthLabels = ['Wide (1200px)', 'Full (1400px)', 'Standard (960px)'];
+
+    function cycleWidth() {
+      currentWidthIdx = (currentWidthIdx + 1) % widths.length;
+      document.querySelector('.container').style.maxWidth = widths[currentWidthIdx];
+      document.getElementById('width-label').innerText = widthLabels[currentWidthIdx];
     }
   </script>
 
