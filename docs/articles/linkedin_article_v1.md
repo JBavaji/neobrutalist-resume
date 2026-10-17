@@ -6,7 +6,7 @@
 
 ***
 
-## 1. The Catalyst: Why Developers Need a Living Resume, Not a Static PDF
+## The Catalyst: Why Developers Need a Living Resume, Not a Static PDF
 
 After 14+ years of architecting cross-platform mobile systems, leading engineering teams, and scaling platforms across FinTech, InsurTech, and enterprise innovation, I found myself facing a frustrating contradiction during senior tech hiring:
 
@@ -24,7 +24,7 @@ Here is the complete behind-the-scenes story of how it was built, the architectu
 
 ***
 
-## 2. 🏛️ AI-SDLC Execution Audit (Stages 1 – 6)
+## 🏛️ AI-SDLC Execution Audit (Stages 1 – 6)
 
 Unregulated AI development produces what I call **"AI Code Vomit"**: massive 1,000-line monolithic files, hallucinations, brittle tests, and hidden architectural debt. 
 
@@ -79,7 +79,7 @@ Staged the repository as a disciplined 7-commit Agile showcase, configured autom
 
 ***
 
-## 3. 📂 Repository File Structure
+## 📂 Repository File Structure
 
 The project follows Clean Architecture principles, ensuring that data, domain models, presentation widgets, and export services remain strictly decoupled:
 
@@ -130,7 +130,7 @@ neobrutalist-resume/
 
 ***
 
-## 4. Hosting & Deployment: Where Should You Host?
+## 📊 Hosting & Deployment: Where Should You Host?
 
 When deploying a web-based developer resume, choosing the right hosting platform dictates maintenance overhead, cost, and reliability. We evaluated the two leading serverless platforms:
 
@@ -157,7 +157,7 @@ When deploying a web-based developer resume, choosing the right hosting platform
 
 ***
 
-## 5. 🌐 How GitHub Pages Routes Multiple Projects Without Collisions
+## 🌐 How GitHub Pages Routes Multiple Projects Without Collisions
 
 A common architectural question I get from senior developers:
 
@@ -194,7 +194,7 @@ Because `${{ github.event.repository.name }}` dynamically resolves to your repos
 
 ***
 
-## 6. The Zero-Bloat Data Layer: `resume_data.json`
+## 📄 The Zero-Bloat Data Layer: `resume_data.json`
 
 To ensure anyone can personalize the resume in 60 seconds without knowing Flutter widget trees, all content is decoupled into a typed JSON schema in [`assets/data/resume_data.json`](assets/data/resume_data.json):
 
@@ -273,7 +273,7 @@ To ensure anyone can personalize the resume in 60 seconds without knowing Flutte
 
 ***
 
-## 7. Solving the Flutter Web Initial "Blank Screen" Performance Bug
+## ⚡ Slaying the Flutter Web Cold-Start "Blank Screen"
 
 When we first deployed the application to GitHub Pages, we observed a jarring user experience: **a 2–4 second blank beige screen on cold load**.
 
@@ -294,7 +294,7 @@ We embedded a zero-dependency, pure-CSS Neobrutalist Splash Card directly inside
 
 ***
 
-## 8. 🚀 Fork & Deploy Your Own in 1 Minute
+## 🚀 Fork & Deploy Your Own in 1 Minute
 
 You can fork this repository and launch your own live Neobrutalist resume right now:
 
@@ -320,7 +320,7 @@ Your resume will build and publish automatically at:
 
 ***
 
-## 9. Exploring My Next Leadership Chapter
+## 🎯 Exploring My Next Leadership Chapter
 
 As I publish this open-source initiative, I am actively exploring my next career chapter.
 
