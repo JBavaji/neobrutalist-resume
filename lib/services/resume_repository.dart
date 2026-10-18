@@ -51,9 +51,9 @@ class ResumeRepository {
   /// Default in-memory fallback resume data
   static const ResumeData fallbackData = ResumeData(
     nameFirst: 'JAYESHGIRI',
-    nameLast: 'BAVAJI',
+    nameLast: 'BAVAJII',
     bio:
-        "Hi, I'm Jayesh, an Engineering Manager & Technical Architect based in Pune, India with 14+ years building cross-platform mobile, web, and Agentic AI solutions across FinTech, InsurTech, and enterprise innovation.",
+        "Hi, I'm JBavajii, an Engineering Manager & Technical Architect based in Pune, India with 14+ years building cross-platform mobile, web, and Agentic AI solutions across FinTech, InsurTech, and enterprise innovation.",
     experience: [
       ExperienceItem(
         role: 'Associate Specialist Technology (Lead)',

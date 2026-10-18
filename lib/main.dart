@@ -18,7 +18,7 @@ class NeobrutalistResumeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Jayeshgiri R. Bavaji - Neobrutalist Resume',
+      title: 'Jayeshgiri R. Bavajii - Neobrutalist Resume',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.canvasBg,

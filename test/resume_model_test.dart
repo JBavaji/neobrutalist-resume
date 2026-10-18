@@ -7,7 +7,7 @@ void main() {
     test('Fallback data is valid and fully populated', () {
       final fallback = ResumeRepository.fallbackData;
       expect(fallback.nameFirst, 'JAYESHGIRI');
-      expect(fallback.nameLast, 'BAVAJI');
+      expect(fallback.nameLast, 'BAVAJII');
       expect(fallback.experience.isNotEmpty, true);
       expect(fallback.skills.isNotEmpty, true);
       expect(fallback.projects.isNotEmpty, true);

@@ -11,7 +11,7 @@
   <a href="https://dart.dev"><img src="https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white" alt="Dart 3"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="docs/intent.md"><img src="https://img.shields.io/badge/AI--SDLC-Compliant%20v2.0-4F46E5" alt="AI-SDLC Compliant"></a>
-  <a href="https://linkedin.com/in/jbavaji"><img src="https://img.shields.io/badge/LinkedIn-Jayeshgiri%20Bavaji-0A66C2?logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+  <a href="https://linkedin.com/in/jbavaji"><img src="https://img.shields.io/badge/LinkedIn-Jayeshgiri%20Bavajii-0A66C2?logo=linkedin&logoColor=white" alt="LinkedIn"></a>
 </p>
 
 <p align="center">
@@ -233,7 +233,7 @@ For vulnerability reporting and an overview of our STRIDE threat model security 
 
 This project is licensed under the **[MIT License](LICENSE)** — free for personal and commercial use.
 
-Authored with ❤️ by **[Jayeshgiri R. Bavaji](https://linkedin.com/in/jbavaji)**  
+Authored with ❤️ by **[Jayeshgiri Bavajii](https://linkedin.com/in/jbavaji)**  
 *Engineering Manager & Principal Technical Architect • Pune, Maharashtra, India*
 
 If you find this project valuable, please give it a **⭐ Star** on GitHub and share it with your network!
