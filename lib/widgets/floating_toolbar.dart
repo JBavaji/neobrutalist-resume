@@ -92,10 +92,10 @@ class FloatingToolbar extends StatelessWidget {
     Color? textColor,
     Color? borderColor,
   }) {
-    final effectiveBg = backgroundColor ??
-        (isOutline ? Colors.transparent : AppColors.ink);
-    final effectiveText = textColor ??
-        (isOutline ? AppColors.ink : Colors.white);
+    final effectiveBg =
+        backgroundColor ?? (isOutline ? Colors.transparent : AppColors.ink);
+    final effectiveText =
+        textColor ?? (isOutline ? AppColors.ink : Colors.white);
     final effectiveBorder = borderColor ?? AppColors.ink;
 
     return InkWell(
@@ -106,7 +106,8 @@ class FloatingToolbar extends StatelessWidget {
         decoration: BoxDecoration(
           color: effectiveBg,
           borderRadius: BorderRadius.circular(999),
-          border: isOutline ? Border.all(color: effectiveBorder, width: 1.5) : null,
+          border:
+              isOutline ? Border.all(color: effectiveBorder, width: 1.5) : null,
         ),
         child: Text(
           label,

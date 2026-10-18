@@ -22,9 +22,11 @@ check-env: ## Verify Flutter and Dart SDK availability
 	@echo "✓ Flutter SDK verified"
 
 lint: ## Run static analysis and format check
+	@echo "Checking Dart formatting..."
+	@$(DART) format --output=none --set-exit-if-changed .
 	@echo "Running dart analyze..."
 	@$(FLUTTER) analyze
-	@echo "✓ Static analysis passed"
+	@echo "✓ Static analysis and formatting passed"
 
 test: ## Run unit and widget test suite
 	@echo "Running flutter test..."

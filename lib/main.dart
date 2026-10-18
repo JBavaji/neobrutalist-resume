@@ -177,9 +177,8 @@ class _ResumeScreenState extends State<ResumeScreen> {
                                     item: data.experience[i],
                                     isEditing: _isEditing,
                                     onRoleChanged: (val) {
-                                      final expList =
-                                          List<ExperienceItem>.from(
-                                              data.experience);
+                                      final expList = List<ExperienceItem>.from(
+                                          data.experience);
                                       expList[i] = ExperienceItem(
                                         role: val,
                                         company: expList[i].company,
@@ -190,9 +189,8 @@ class _ResumeScreenState extends State<ResumeScreen> {
                                           data.copyWith(experience: expList));
                                     },
                                     onCompanyChanged: (val) {
-                                      final expList =
-                                          List<ExperienceItem>.from(
-                                              data.experience);
+                                      final expList = List<ExperienceItem>.from(
+                                          data.experience);
                                       expList[i] = ExperienceItem(
                                         role: expList[i].role,
                                         company: val,
@@ -203,9 +201,8 @@ class _ResumeScreenState extends State<ResumeScreen> {
                                           data.copyWith(experience: expList));
                                     },
                                     onPeriodChanged: (val) {
-                                      final expList =
-                                          List<ExperienceItem>.from(
-                                              data.experience);
+                                      final expList = List<ExperienceItem>.from(
+                                          data.experience);
                                       expList[i] = ExperienceItem(
                                         role: expList[i].role,
                                         company: expList[i].company,
@@ -216,11 +213,10 @@ class _ResumeScreenState extends State<ResumeScreen> {
                                           data.copyWith(experience: expList));
                                     },
                                     onBulletChanged: (bIndex, bVal) {
-                                      final expList =
-                                          List<ExperienceItem>.from(
-                                              data.experience);
-                                      final bList = List<String>.from(
-                                          expList[i].bullets);
+                                      final expList = List<ExperienceItem>.from(
+                                          data.experience);
+                                      final bList =
+                                          List<String>.from(expList[i].bullets);
                                       bList[bIndex] = bVal;
                                       expList[i] = ExperienceItem(
                                         role: expList[i].role,
@@ -272,8 +268,8 @@ class _ResumeScreenState extends State<ResumeScreen> {
                                     item: data.projects[i],
                                     isEditing: _isEditing,
                                     onNameChanged: (val) {
-                                      final proj = List<ProjectItem>.from(
-                                          data.projects);
+                                      final proj =
+                                          List<ProjectItem>.from(data.projects);
                                       proj[i] = ProjectItem(
                                         name: val,
                                         description: proj[i].description,
@@ -282,8 +278,8 @@ class _ResumeScreenState extends State<ResumeScreen> {
                                           data.copyWith(projects: proj));
                                     },
                                     onDescriptionChanged: (val) {
-                                      final proj = List<ProjectItem>.from(
-                                          data.projects);
+                                      final proj =
+                                          List<ProjectItem>.from(data.projects);
                                       proj[i] = ProjectItem(
                                         name: proj[i].name,
                                         description: val,
@@ -479,7 +475,8 @@ class _ResumeScreenState extends State<ResumeScreen> {
       nameFirst: data.nameFirst,
       nameLast: data.nameLast,
       isEditing: _isEditing,
-      onFirstNameChanged: (val) => _onDataChanged(data.copyWith(nameFirst: val)),
+      onFirstNameChanged: (val) =>
+          _onDataChanged(data.copyWith(nameFirst: val)),
       onLastNameChanged: (val) => _onDataChanged(data.copyWith(nameLast: val)),
     );
 
