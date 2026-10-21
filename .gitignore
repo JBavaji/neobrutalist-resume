@@ -28,5 +28,6 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+coverage/
 
 # Web specific
